@@ -1,16 +1,31 @@
 import type { AppProps } from "next/app";
+import { NextPage } from "next";
+import { ReactElement, ReactNode } from "react";
 import { ChainProvider } from "@cosmos-kit/react";
 import { wallets } from "@cosmos-kit/keplr";
 import { assets, chains } from "chain-registry";
 import { GasPrice } from "@cosmjs/stargate";
-
 import { SignerOptions } from "@cosmos-kit/core";
 import { Chain, AssetList } from "@chain-registry/types";
 
+import "@/styles/globals.scss";
+// Import this in your top-level route/layout
+import "@interchain-ui/react/styles";
 import { network } from "@/config";
-import "@/styles/globals.css";
+import LayoutDefault from "@/layouts/LayoutDefault";
 
-export default function App({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout =
+    Component.getLayout ?? ((page) => <LayoutDefault>{page}</LayoutDefault>);
+
   const signerOptions: SignerOptions = {
     // signingStargate: (_chain: Chain) => {
     //   return getSigningCosmosClientOptions();
@@ -24,6 +39,14 @@ export default function App({ Component, pageProps }: AppProps) {
       }
     },
   };
+
+  const MyModal = () => {
+    return (
+      <div>
+        hi
+      </div>
+    )
+  }
 
   return (
     <ChainProvider
@@ -39,9 +62,9 @@ export default function App({ Component, pageProps }: AppProps) {
         },
       }}
       // walletConnectOptions={...} // required if `wallets` contains mobile wallets
-      // walletModal={Modal}
+      // walletModal={MyModal}
     >
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </ChainProvider>
   );
 }
