@@ -54,7 +54,7 @@ const LayoutDocument = ({
   const [collapsed, setCollapsed] = useState(false);
   const [currentKey, setCurrentKey] = useState("2");
 
-  const handleSwitchPage: MenuProps["onSelect"] = (e) => {
+  const handleSwitchPage: MenuProps["onClick"] = (e) => {
     switch (e.key) {
       case "1":
         router.push("/");
@@ -87,7 +87,7 @@ const LayoutDocument = ({
           selectedKeys={[currentKey]}
           mode="inline"
           items={items}
-          onSelect={handleSwitchPage}
+          onClick={handleSwitchPage}
         />
       </Sider>
       <Layout>

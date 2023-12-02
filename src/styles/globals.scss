@@ -4,10 +4,11 @@
 
 @import './header.scss';
 @import './layout.scss';
+@import 'home.scss';
+@import 'dao.scss';
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-

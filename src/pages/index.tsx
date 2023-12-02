@@ -11,7 +11,13 @@ import { useLayoutEffect, useState } from "react";
 // import { DaoProposalSingleClient } from "../codegen/DaoProposalSingle.client";
 import { Button } from "antd";
 import DaoCard from "@/components/DaoCard";
-import { daoInfo } from "@/config";
+import { daoInfo, network } from "@/config";
+import { useChain } from "@cosmos-kit/react";
+import {
+  DaoDaoCoreClient,
+  DaoDaoCoreQueryClient,
+} from "@/codegen/DaoDaoCore.client";
+import { DaoProposalSingleClient, DaoProposalSingleQueryClient } from "@/codegen/DaoProposalSingle.client";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -98,12 +104,15 @@ export default function Home() {
   //     setProposal(proposal);
   //   }
   // };
+  const { getSigningCosmWasmClient, address, getCosmWasmClient } = useChain(
+    network.chainName
+  );
 
   return (
-    <div className="flex flex-col">
+    <div id="home" className="flex flex-col">
       <h1 className="text-[20px] font-semibold mb-8">Featured DAOs</h1>
       <div className="w-full">
-        <DaoCard name="DAO" description="Dao that build daos" dao_info={daoInfo}/>
+        <DaoCard daoInfo={daoInfo}/>
       </div>
     </div>
   );

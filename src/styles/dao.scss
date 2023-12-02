@@ -1,0 +1,18 @@
+#dao {
+  .ant-btn {
+    @apply text-[18px] h-auto text-white bg-black;
+  }
+
+  .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover,
+  .ant-btn-default:not(:disabled):not(.ant-btn-disabled):active {
+    @apply border-black;
+  }
+
+  .ant-btn:not(:disabled):focus-visible {
+    @apply outline-none;
+  }
+
+  .ant-btn >span {
+    @apply inline-flex;
+  }
+}

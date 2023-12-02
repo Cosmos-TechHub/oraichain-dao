@@ -40,14 +40,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     },
   };
 
-  const MyModal = () => {
-    return (
-      <div>
-        hi
-      </div>
-    )
-  }
-
   return (
     <ChainProvider
       chains={chains}
@@ -58,11 +50,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         endpoints: {
           osmosistestnet: {
             rpc: [network.rpc],
+            isLazy: true
           },
         },
       }}
       // walletConnectOptions={...} // required if `wallets` contains mobile wallets
-      // walletModal={MyModal}
     >
       {getLayout(<Component {...pageProps} />)}
     </ChainProvider>
