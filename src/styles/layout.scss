@@ -1,12 +1,15 @@
 #layout {
-  @apply min-h-[100vh];
+  #content {
+    @apply mt-[101px] ml-[280px] py-10 px-16 bg-white;
+    transition: all 0.2s;
+  }
 
   .ant-layout-sider-children {
     border: 1px solid rgba(5, 5, 5, 0.06);
   }
 
   .ant-layout-sider {
-    background: #fff;
+    @apply bg-white fixed top-0 bottom-0;
   }
 
   .ant-layout-sider-trigger {
@@ -25,6 +28,14 @@
     width: 80px !important;
     min-width: 80px !important;
     max-width: 80px !important;
+  }
+
+  aside.ant-layout-sider-collapsed ~ div>#header {
+    @apply left-[80px];
+  }
+
+  aside.ant-layout-sider-collapsed ~ div>#content {
+    @apply ml-[80px];
   }
 
   div.ant-layout-sider-trigger {

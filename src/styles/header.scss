@@ -1,12 +1,13 @@
 #header {
-    @apply h-[101px] px-10 flex items-center justify-between bg-white;
-    border-bottom: 1px solid rgba(5, 5, 5, 0.06);
-    border-top: 1px solid rgba(5, 5, 5, 0.06);
+  @apply h-[101px] px-10 flex items-center justify-between bg-white fixed top-0 right-0 left-[280px];
+  transition: all 0.2s;
+  border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+  border-top: 1px solid rgba(5, 5, 5, 0.06);
 
-    .ant-btn {
-        font-size: 20px;
-        height: 46px;
-        padding: 8px 16px;
-        border-radius: 6px;
-    }
+  .ant-btn {
+    font-size: 20px;
+    height: 46px;
+    padding: 8px 16px;
+    border-radius: 6px;
+  }
 }

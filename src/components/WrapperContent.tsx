@@ -6,7 +6,7 @@ type Props = {
 
 const WrapperContent = ({children}: Props) => {
   return (
-    <div className='w-full min-h-screen p-10 bg-white'>{children}</div>
+    <div id="content">{children}</div>
   )
 }
 

@@ -8,6 +8,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import DaoImage from "@/assets/image/dao.png";
 import { network } from "@/config";
 import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
+import { DaoProposalSingleQueryClient } from "@/codegen/DaoProposalSingle.client";
 
 interface IDaoCard {
   daoInfo: {
@@ -36,12 +37,15 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
 
       if (newDaoClient !== null) {
         const config = await newDaoClient.config();
-        const proposalCount = await newDaoClient.proposalModuleCount();
+        const proposals = await newDaoClient.proposalModules({});
+        const proposalClient = new DaoProposalSingleQueryClient(client, proposals[0].address)
+        const totalProposal = await proposalClient.proposalCount();
+
         setDaoContractInfo({
           name: config.name,
           description: config.description,
           image_url: config.image_url,
-          proposal_count: proposalCount.total_proposal_module_count,
+          proposal_count: Number(totalProposal),
         });
       }
     };
