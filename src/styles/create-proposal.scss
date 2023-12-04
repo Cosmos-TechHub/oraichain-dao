@@ -1,0 +1,44 @@
+#create-proposal {
+    @apply flex flex-col gap-10;
+
+    #basic {
+        @apply bg-custom-grey-card px-4 pt-6 rounded-lg;
+
+        #hline {
+            @apply h-[1px] bg-custom-grey-card ml-[-20px] mb-4;
+            width: calc(100% + 40px);
+        }
+
+        .ant-form-item .ant-form-item-label {
+            @apply text-left flex items-center;
+        }
+
+        .ant-form-item .ant-form-item-label >label {
+            @apply text-[17px] text-custom-black-grey font-semibold;
+        }
+
+        .ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+            @apply hidden;
+        }
+
+        .ant-input {
+            @apply px-[16px] py-[12px] text-[16px] border-custom-grey-hover;
+        }
+
+        .ant-input:hover {
+            @apply border-custom-grey-hover;
+        }
+
+        .ant-input:focus-within {
+            box-shadow: none;
+        }
+
+        .ant-btn {
+            @apply px-[20px] py-[6px] text-[16px] h-auto min-w-[40px];
+        }
+
+        .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+            @apply border-custom-grey-card text-custom-black-grey;
+        }
+    }
+}
