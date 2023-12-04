@@ -61,15 +61,18 @@ const ProposalStatus = ({ status }: { status: Status }) => {
 const ProposalItem = ({ addr, proposalId, proposalInfo }: IProposalItem) => {
   return (
     <Link
-      href={"/"}
+      href={{
+        pathname: "/proposal/[...id]",
+        query: { id: [addr, proposalId.toString()] },
+      }}
       className="w-full min-h-[60px] bg-custom-grey-card hover:bg-custom-grey-hover flex items-center justify-between px-6 rounded-md"
     >
       <div className="flex flex-1 items-center gap-14">
         <div className="flex items-center gap-14 w-[28%]">
-            <h1 className="text-[16px] text-custom-grey font-semibold">
-              A-{proposalId}
-            </h1>
-            <ProposalStatus status={proposalInfo.status} />
+          <h1 className="text-[16px] text-custom-grey font-semibold">
+            A-{proposalId}
+          </h1>
+          <ProposalStatus status={proposalInfo.status} />
         </div>
         <p className="text-[16px] text-custom-black-grey font-semibold flex-1">
           {proposalInfo.title + " - " + proposalInfo.description}

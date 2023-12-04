@@ -4,9 +4,10 @@
 
 @import './header.scss';
 @import './layout.scss';
-@import 'home.scss';
-@import 'dao.scss';
+@import './home.scss';
+@import './dao.scss';
 @import './create-proposal.scss';
+@import './proposal.scss';
 
 * {
   margin: 0;
