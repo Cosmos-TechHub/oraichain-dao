@@ -5,19 +5,8 @@ import { Inter } from "next/font/google";
 // import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
 
 // import { network, daoInfo } from "@/config";
-import { useLayoutEffect, useState } from "react";
-
-// import { ProposalResponse } from "../codegen/DaoProposalSingle.types";
-// import { DaoProposalSingleClient } from "../codegen/DaoProposalSingle.client";
-import { Button } from "antd";
 import DaoCard from "@/components/DaoCard";
-import { daoInfo, network } from "@/config";
-import { useChain } from "@cosmos-kit/react";
-import {
-  DaoDaoCoreClient,
-  DaoDaoCoreQueryClient,
-} from "@/codegen/DaoDaoCore.client";
-import { DaoProposalSingleClient, DaoProposalSingleQueryClient } from "@/codegen/DaoProposalSingle.client";
+import { daoInfo } from "@/config";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -104,9 +93,6 @@ export default function Home() {
   //     setProposal(proposal);
   //   }
   // };
-  const { getSigningCosmWasmClient, address, getCosmWasmClient } = useChain(
-    network.chainName
-  );
 
   return (
     <div id="home" className="flex flex-col">

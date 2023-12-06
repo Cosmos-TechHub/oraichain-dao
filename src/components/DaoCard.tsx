@@ -36,17 +36,24 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
       const newDaoClient = new DaoDaoCoreQueryClient(client, daoInfo.dao_addr);
 
       if (newDaoClient !== null) {
-        const config = await newDaoClient.config();
-        const proposals = await newDaoClient.proposalModules({});
-        const proposalClient = new DaoProposalSingleQueryClient(client, proposals[0].address)
-        const totalProposal = await proposalClient.proposalCount();
+        try {
+          const config = await newDaoClient.config();
+          const proposals = await newDaoClient.proposalModules({});
+          const proposalClient = new DaoProposalSingleQueryClient(
+            client,
+            proposals[0].address
+          );
+          const totalProposal = await proposalClient.proposalCount();
 
-        setDaoContractInfo({
-          name: config.name,
-          description: config.description,
-          image_url: config.image_url,
-          proposal_count: Number(totalProposal),
-        });
+          setDaoContractInfo({
+            name: config.name,
+            description: config.description,
+            image_url: config.image_url,
+            proposal_count: Number(totalProposal),
+          });
+        } catch (err: any) {
+          console.log(err);
+        }
       }
     };
 
@@ -88,7 +95,7 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
               <div>
                 <BankOutlined />
               </div>
-              <h1>descript</h1>
+              <h1>{daoContractInfo.description}</h1>
             </div>
             <div className="flex text-sm items-center w-full gap-2">
               <div>
