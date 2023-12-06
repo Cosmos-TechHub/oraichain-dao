@@ -1,5 +1,35 @@
 #proposal {
-    @apply grid grid-cols-8 gap-16;
+  @apply grid grid-cols-8 gap-16;
 
-    
+  .ant-form-item .ant-form-item-label > label {
+    @apply text-[22px] text-custom-grey-grey font-semibold mb-3;
+  }
+
+  .ant-radio-group {
+    @apply flex flex-col gap-2;
+  }
+
+  .ant-radio-wrapper {
+    @apply text-[18px] text-custom-black-grey font-semibold w-full px-2 py-3 bg-custom-grey-card rounded-lg hover:bg-custom-grey-hover;
+  }
+
+  .ant-radio-wrapper.ant-radio-wrapper-checked {
+    @apply text-custom-purple bg-custom-purple-bg hover:bg-custom-grey-card;
+  }
+
+  .ant-radio-wrapper .ant-radio {
+    @apply hidden;
+  }
+
+  .ant-radio-wrapper span.ant-radio + * {
+    @apply w-full flex items-center justify-between px-4;
+  }
+
+  .ant-btn {
+    @apply h-auto;
+  }
+
+  .ant-btn-primary {
+    @apply w-full bg-custom-black-grey py-3 text-[18px] font-semibold hover:opacity-90;
+  }
 }

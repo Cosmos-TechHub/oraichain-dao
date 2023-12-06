@@ -18,7 +18,9 @@ const config: Config = {
         'custom-grey-hover': 'rgba( 36,38,40 ,0.15)',
         'custom-grey-card': 'rgba( 36,38,40 ,0.05)',
         'custom-black-grey': 'rgba( 36,38,40 ,0.95)',
-        'custom-grey-grey': 'rgba( 36,38,40 ,0.7)'
+        'custom-grey-grey': 'rgba( 36,38,40 ,0.7)',
+        'custom-purple': 'rgba( 123,97,255 ,0.95)',
+        'custom-purple-bg': 'rgba( 123,97,255 ,0.25)'
       }
     },
   },

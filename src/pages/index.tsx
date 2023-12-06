@@ -6,7 +6,10 @@ import { Inter } from "next/font/google";
 
 // import { network, daoInfo } from "@/config";
 import DaoCard from "@/components/DaoCard";
-import { daoInfo } from "@/config";
+import { daoInfo, network } from "@/config";
+import { useChain } from "@cosmos-kit/react";
+import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
+import { toBinary } from "@cosmjs/cosmwasm-stargate";
 
 const inter = Inter({ subsets: ["latin"] });
 

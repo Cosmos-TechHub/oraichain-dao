@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
-import { ChainProvider } from "@cosmos-kit/react";
+import { ChainProvider, useChain } from "@cosmos-kit/react";
 import { wallets } from "@cosmos-kit/keplr";
 import { assets, chains } from "chain-registry";
 import { GasPrice } from "@cosmjs/stargate";

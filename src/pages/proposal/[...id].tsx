@@ -1,18 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   PicLeftOutlined,
-  ReloadOutlined,
-  DollarOutlined,
-  FieldTimeOutlined,
+  CheckOutlined,
+  CloseOutlined,
+  BorderOuterOutlined,
 } from "@ant-design/icons";
-import Image from "next/image";
+import { Button, Form, Radio } from "antd";
 
-import DaoIcon from "@/assets/image/dao-icon.svg";
+import ProposalInfo from "@/components/ProposalInfo";
+import { useChain } from "@cosmos-kit/react";
+import { network } from "@/config";
+import { DaoProposalSingleClient } from "@/codegen/DaoProposalSingle.client";
+import { useRouter } from "next/router";
 
 const Proposal = () => {
+  const { getSigningCosmWasmClient, status, address } = useChain(
+    network.chainName
+  );
+  const router = useRouter()
+
+  const [proposalInfo, setProposalInfo] = useState<{
+    proposal_addr: string;
+    proposal_id: string;
+  } | null>(null);
+
+  const onFinish = async (values: any) => {
+    console.log("Success:", values);
+
+    const client = await getSigningCosmWasmClient();
+
+    if (address && proposalInfo) {
+      const proposalClient = new DaoProposalSingleClient(
+        client,
+        address,
+        proposalInfo.proposal_addr
+      );
+      await proposalClient.vote({
+        proposalId: Number(proposalInfo.proposal_id),
+        vote: values.voting,
+      });
+    }
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  type FieldType = {
+    voting?: string;
+  };
+
+  useEffect(() => {
+    if(router.isReady && router.query.id) {
+      const routerPath = router.query.id;
+      
+      setProposalInfo({
+        proposal_addr: routerPath[0],
+        proposal_id: routerPath[1]
+      })
+    }
+  }, [router])
+
   return (
     <div id="proposal">
-      <div className="col-span-3 flex flex-col gap-6">
+      <div className="col-span-3 flex flex-col gap-8">
         <div className="flex flex-col gap-3 text-[18px] text-custom-grey-grey ">
           <div className="flex items-center gap-3">
             <PicLeftOutlined className="text-[22px]" />
@@ -23,51 +74,56 @@ const Proposal = () => {
             voter participation.
           </p>
         </div>
-        <div className="flex flex-col gap-4 pt-6 border-t border-custom-grey-card">
-          <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-custom-grey-grey">
-              <Image src={DaoIcon} alt="dao icon" width={25} height={25} />
-              <h1>DAO</h1>
-            </div>
-            <p className="text-[20px] font-semibold text-custom-black-grey">
-              Osmosis
-            </p>
+
+        <ProposalInfo />
+
+        {status === "Connected" && (
+          <div className="pt-8 border-t border-custom-grey-card">
+            <Form
+              name="basic"
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+              style={{ maxWidth: 600 }}
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Form.Item<FieldType> label="Voting" name="voting">
+                <Radio.Group>
+                  <Radio value="yes">
+                    <span>Yes</span>
+                    <CheckOutlined className="text-[20px]" />
+                  </Radio>
+                  <Radio value="no">
+                    <span>No</span>
+                    <CloseOutlined className="text-[20px]" />
+                  </Radio>
+                  <Radio value="abstain">
+                    <span>Abstain</span>
+                    <BorderOuterOutlined className="text-[20px]" />
+                  </Radio>
+                </Radio.Group>
+              </Form.Item>
+
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Cast your vote
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
-          <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-custom-grey-grey">
-              <ReloadOutlined className="text-[22px]" />
-              <h1>Status</h1>
-            </div>
-            <p className="text-[20px] font-semibold text-custom-black-grey">
-              Voting Period
-            </p>
-          </div>
-          <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-custom-grey-grey">
-              <DollarOutlined className="text-[22px]" />
-              <h1>Deposited</h1>
-            </div>
-            <p className="text-[20px] font-semibold text-custom-black-grey">
-              1,600 $OSMO
-            </p>
-          </div>
-          <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-custom-grey-grey">
-              <FieldTimeOutlined className="text-[22px]" />
-              <h1>Time left</h1>
-            </div>
-            <p className="text-[20px] font-semibold text-custom-black-grey">
-              1 day
-            </p>
-          </div>
-        </div>
+        )}
       </div>
+
       <div className="col-span-5 flex flex-col">
         <h1 className="text-custom-black-grey text-[32px] mb-12 font-bold">
           Nois - Store the Randdrop Contract
         </h1>
         <div className="flex flex-col gap-6">
-          <p className="text-[16px] text-custom-grey-grey font-medium">November 30</p>
+          <p className="text-[16px] text-custom-grey-grey font-medium">
+            November 30
+          </p>
           <p className="text-[16px] text-custom-black-grey pr-6 tracking-wider leading-6">
             This proposal aims to store the Wasm code for the nois-randdrop
             contract. Once instantiated it will allow eligible stakers to
