@@ -26,12 +26,17 @@ export const network = {
 };
 
 export const daoInfo = {
-  dao_addr: "orai1aqz7gmnn2uerpvea5h98ah0rcy67vawgk72mye62deetp0g8lrfsp4c8a9",
+  dao_addr: "orai1xm67l9xesgfslr9va67zk7n92ad908adachvuzd8y8rkhqhn7lks9zd3y2",
   voting_addr:
-    "orai107xs40g3rcn4gvvk6m0pgdh3nxhup3zgn0fwzfnjgy0v7k9tq7yq855fmz",
+    "orai1hceqpln9fc3hpy2l4kwv0cspgredahy9ha3jzgx3vjl0qtmpnpwqyvvw2y",
   proposal_addr:
-    "orai1dxx4xn8w335pqhwf7wcrntshl568aqhptd5eqlx4fnv6dxumgj4qngay99",
-  token_addr: "orai1l64zpmvp9xs9fttcj47v6gzhasslwygnr3zl5sl3ethajnlunmyqz22km5",
+    "orai1heuuw8sphhczxens6dszlz49jk7uwsaqzz9t9zunzn30als9ltxqgzh9jq",
+  token_addr: "orai1u4l0d303r2uydga2axjlflmkkcg7j42ffl68an4mf460qtr75y4qq3qxm3",
   staking_addr:
-    "orai1t36xa4k43924ywny0jha9el78aww2gpvapexhwzngkdga0wqvquqyqf4lh",
+    "orai1khlsqw6pxzkmtulwp5uttw4ds6yvt07serz69wja2apjmthzd2pqvtv557",
 };
+
+export const voterAddress = {
+  alice: 'orai1cknd27x0244595pp7a5c9sdekl3ywl52x62ssn',
+  bob: 'orai1rh7c73ulzlnaephwjc27sjpql53fape4ywlglx'
+}

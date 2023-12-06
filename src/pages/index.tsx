@@ -3,7 +3,10 @@ import { Inter } from "next/font/google";
 
 // import { network, daoInfo } from "@/config";
 import DaoCard from "@/components/DaoCard";
-import { daoInfo, network } from "@/config";
+import { daoInfo, network, voterAddress } from "@/config";
+import { useChain } from "@cosmos-kit/react";
+import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
+import { toBinary } from "@cosmjs/cosmwasm-stargate";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -91,12 +94,85 @@ export default function Home() {
   //   }
   // };
 
+  const { getSigningCosmWasmClient, address } = useChain(network.chainName);
+
+  const handleStakeToken = async () => {
+    const client = await getSigningCosmWasmClient();
+    if (address) {
+      const cw20Client = new Cw20BaseClient(
+        client,
+        address,
+        daoInfo.token_addr
+      );
+      await cw20Client.send({
+        contract: daoInfo.staking_addr,
+        amount: "100",
+        msg: toBinary({
+          stake: {},
+        }),
+      });
+
+      const { balance } = await cw20Client.balance({
+        address: daoInfo.staking_addr,
+      });
+      console.log(balance);
+      
+    }
+  };
+
+  const handleSendToAlice = async () => {
+    const client = await getSigningCosmWasmClient();
+    if (address) {
+      const cw20Client = new Cw20BaseClient(
+        client,
+        address,
+        daoInfo.token_addr
+      );
+      await cw20Client.transfer({
+        amount: '10000',
+        recipient: voterAddress.alice //alice
+      });
+
+      const { balance } = await cw20Client.balance({
+        address: voterAddress.alice,
+      });
+      console.log(balance);
+      
+    }
+  }
+
+  const handleSendToBob = async () => {
+    const client = await getSigningCosmWasmClient();
+    if (address) {
+      const cw20Client = new Cw20BaseClient(
+        client,
+        address,
+        daoInfo.token_addr
+      );
+      await cw20Client.transfer({
+        amount: '10000',
+        recipient: voterAddress.bob //bob
+      });
+
+      const { balance } = await cw20Client.balance({
+        address: voterAddress.bob, // bob
+      });
+      console.log(balance);
+      
+    }
+  }
+
   return (
     <div id="home" className="flex flex-col">
       <h1 className="text-[20px] font-semibold mb-8">Featured DAOs</h1>
       <div className="w-full">
-        <DaoCard daoInfo={daoInfo}/>
+        <DaoCard daoInfo={daoInfo} />
       </div>
+      {/* <div className="mt-6 flex gap-6">
+        <button onClick={handleStakeToken}>stake token</button>
+        <button onClick={handleSendToAlice}>send token to alice</button>
+        <button onClick={handleSendToBob}>send token to bob</button>
+      </div> */}
     </div>
   );
 }
