@@ -7,10 +7,12 @@ import { assets, chains } from "chain-registry";
 import { GasPrice } from "@cosmjs/stargate";
 import { SignerOptions } from "@cosmos-kit/core";
 import { Chain, AssetList } from "@chain-registry/types";
+import { ToastContainer } from 'react-toastify';
 
 import "@/styles/globals.scss";
 // Import this in your top-level route/layout
 import "@interchain-ui/react/styles";
+import 'react-toastify/dist/ReactToastify.css';
 import { network } from "@/config";
 import LayoutDefault from "@/layouts/LayoutDefault";
 
@@ -57,6 +59,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       // walletConnectOptions={...} // required if `wallets` contains mobile wallets
     >
       {getLayout(<Component {...pageProps} />)}
+      <ToastContainer />
     </ChainProvider>
   );
 }

@@ -104,7 +104,7 @@ const DaoPage = () => {
                   <ExclamationCircleOutlined className="text-sm" />
                 </div>
                 <p className="text-lg font-medium text-custom-black-grey">
-                  $82.61M est. USD value
+                  $102.25 M est. USD value
                 </p>
               </div>
             </div>

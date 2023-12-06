@@ -1,15 +1,9 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-// import { useChain } from "@cosmos-kit/react";
-// import { toBinary } from "@cosmjs/cosmwasm-stargate";
-// import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
 
 // import { network, daoInfo } from "@/config";
 import DaoCard from "@/components/DaoCard";
 import { daoInfo, network } from "@/config";
-import { useChain } from "@cosmos-kit/react";
-import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
-import { toBinary } from "@cosmjs/cosmwasm-stargate";
 
 const inter = Inter({ subsets: ["latin"] });
 

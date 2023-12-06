@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useChain } from "@cosmos-kit/react";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 import { network } from "@/config";
 import { DaoProposalSingleClient } from "@/codegen/DaoProposalSingle.client";
@@ -15,19 +16,35 @@ const CreateProposal = () => {
 
   const [proposalClient, setProposalClient] =
     useState<DaoProposalSingleClient | null>(null);
+  const [daoAddr, setDaoAddr] = useState<string>("");
+  const [loadingMakeProposal, setLoadingMakeProposal] = useState(false);
 
   const onFinish = async (values: any) => {
     console.log("Success:", values);
 
-    if(proposalClient) {
-      const res = await proposalClient.propose({
-        title: values.proposalName,
-        description: values.description,
-        msgs: []
-      })
+    if (address && proposalClient) {
+      setLoadingMakeProposal(true);
+      try {
+        const res = await proposalClient.propose({
+          title: values.proposalName,
+          description: values.description,
+          msgs: [],
+        });
 
-      console.log(res);
-      
+        setLoadingMakeProposal(false);
+        form.resetFields();
+        toast.success("Make proposal success !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        router.push({ pathname: "/dao/[id]", query: { id: daoAddr } });
+      } catch (err: any) {
+        console.log(err);
+        setLoadingMakeProposal(false);
+
+        toast.error("Make proposal error!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     }
   };
 
@@ -56,6 +73,9 @@ const CreateProposal = () => {
             address,
             proposalAddr
           );
+          const daoAddr = await newProposalClient.dao();
+
+          setDaoAddr(daoAddr);
           setProposalClient(newProposalClient);
         }
       } else {
@@ -84,7 +104,11 @@ const CreateProposal = () => {
         form={form}
         onReset={onReset}
       >
-        <Form.Item<FieldType> label="Proposal's name" name="proposalName" rules={[{required: true}]}>
+        <Form.Item<FieldType>
+          label="Proposal's name"
+          name="proposalName"
+          rules={[{ required: true }]}
+        >
           <Input placeholder="Give your proposal a name" />
         </Form.Item>
 
@@ -95,7 +119,7 @@ const CreateProposal = () => {
           name="description"
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
-          rules={[{required: true}]}
+          rules={[{ required: true }]}
         >
           <Input.TextArea
             placeholder="Give your proposal a description..."
@@ -110,6 +134,7 @@ const CreateProposal = () => {
           <Button
             htmlType="submit"
             disabled={status !== "Connected" ? true : false}
+            loading={loadingMakeProposal}
           >
             Submit
           </Button>

@@ -6,39 +6,69 @@ import {
   BorderOuterOutlined,
 } from "@ant-design/icons";
 import { Button, Form, Radio } from "antd";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 import ProposalInfo from "@/components/ProposalInfo";
 import { useChain } from "@cosmos-kit/react";
 import { network } from "@/config";
-import { DaoProposalSingleClient } from "@/codegen/DaoProposalSingle.client";
-import { useRouter } from "next/router";
+import {
+  DaoProposalSingleClient,
+  DaoProposalSingleQueryClient,
+} from "@/codegen/DaoProposalSingle.client";
+import { SingleChoiceProposal } from "@/codegen/types";
 
 const Proposal = () => {
-  const { getSigningCosmWasmClient, status, address } = useChain(
-    network.chainName
-  );
-  const router = useRouter()
+  const { getCosmWasmClient, getSigningCosmWasmClient, status, address } =
+    useChain(network.chainName);
+  const router = useRouter();
 
-  const [proposalInfo, setProposalInfo] = useState<{
+  const [proposalQueryClient, setProposalQueryClient] =
+    useState<DaoProposalSingleQueryClient | null>(null);
+  const [proposalPathInfo, setProposalPathInfo] = useState<{
     proposal_addr: string;
     proposal_id: string;
   } | null>(null);
+  const [proposalInfo, setProposalInfo] = useState<SingleChoiceProposal | null>(
+    null
+  );
+  const [loadingVote, setLoadingVote] = useState(false);
 
   const onFinish = async (values: any) => {
     console.log("Success:", values);
 
-    const client = await getSigningCosmWasmClient();
+    if (address && proposalPathInfo) {
+      setLoadingVote(true);
+      try {
+        const client = await getSigningCosmWasmClient();
+        const proposalClient = new DaoProposalSingleClient(
+          client,
+          address,
+          proposalPathInfo.proposal_addr
+        );
+        await proposalClient.vote({
+          proposalId: Number(proposalPathInfo.proposal_id),
+          vote: values.voting,
+        });
 
-    if (address && proposalInfo) {
-      const proposalClient = new DaoProposalSingleClient(
-        client,
-        address,
-        proposalInfo.proposal_addr
-      );
-      await proposalClient.vote({
-        proposalId: Number(proposalInfo.proposal_id),
-        vote: values.voting,
-      });
+        setLoadingVote(false);
+        toast.success("Vote success !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        if (proposalQueryClient) {
+          const proposal = await proposalQueryClient.proposal({
+            proposalId: Number(proposalPathInfo.proposal_id),
+          });
+          setProposalInfo(proposal.proposal)
+        }
+      } catch (err: any) {
+        console.log(err);
+
+        setLoadingVote(false);
+        toast.error("Vote error !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     }
   };
 
@@ -51,15 +81,32 @@ const Proposal = () => {
   };
 
   useEffect(() => {
-    if(router.isReady && router.query.id) {
-      const routerPath = router.query.id;
-      
-      setProposalInfo({
-        proposal_addr: routerPath[0],
-        proposal_id: routerPath[1]
-      })
-    }
-  }, [router])
+    const getProposalInfo = async () => {
+      if (router.isReady && router.query.id) {
+        const routerPath = router.query.id;
+
+        const client = await getCosmWasmClient();
+        const newProposalClient = new DaoProposalSingleQueryClient(
+          client,
+          routerPath[0]
+        );
+        const proposal = await newProposalClient.proposal({
+          proposalId: Number(routerPath[1]),
+        });
+
+        setProposalQueryClient(newProposalClient);
+        setProposalPathInfo({
+          proposal_addr: routerPath[0],
+          proposal_id: routerPath[1],
+        });
+        setProposalInfo(proposal.proposal);
+      }
+    };
+
+    getProposalInfo();
+  }, [router]);
+
+  console.log(proposalInfo);
 
   return (
     <div id="proposal">
@@ -75,7 +122,7 @@ const Proposal = () => {
           </p>
         </div>
 
-        <ProposalInfo />
+        <ProposalInfo proposal={proposalInfo} />
 
         {status === "Connected" && (
           <div className="pt-8 border-t border-custom-grey-card">
@@ -107,7 +154,7 @@ const Proposal = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" loading={loadingVote}>
                   Cast your vote
                 </Button>
               </Form.Item>
