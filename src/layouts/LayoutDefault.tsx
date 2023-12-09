@@ -10,6 +10,7 @@ import Header from "@/components/Header";
 import DaoSvg from "@/assets/image/dao.svg";
 import MenuItem from "antd/es/menu/MenuItem";
 import WrapperContent from "@/components/WrapperContent";
+import OraiSvg from '@/assets/image/orai.svg'
 
 type Props = {
   children: ReactNode;
@@ -36,10 +37,10 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem(
-    "DAO DAO",
+    "ORAI DAO",
     "1",
     <div className="dao-icon">
-      <Image src={DaoSvg} alt="dao icon" />
+      <Image src={OraiSvg} alt="dao icon" />
     </div>
   ),
   getItem("Home", "2", <HomeOutlined />),

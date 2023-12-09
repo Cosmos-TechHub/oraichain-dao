@@ -6,6 +6,7 @@ import { useChain } from "@cosmos-kit/react";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import DaoImage from "@/assets/image/dao.png";
+import OraiImage from '@/assets/image/new-orai.png'
 import { network } from "@/config";
 import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
 import { DaoProposalSingleQueryClient } from "@/codegen/DaoProposalSingle.client";
@@ -77,10 +78,10 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
           <div className="flex flex-col items-center">
             <Image
               src={
-                daoContractInfo.image_url ? daoContractInfo.image_url : DaoImage
+                daoContractInfo.image_url ? daoContractInfo.image_url : OraiImage
               }
               alt="dao image"
-              className="w-[104px] h-[104px]"
+              className="w-[104px] h-[104px] mb-1"
             />
             <h1 className="text-base text-black font-medium">
               {daoContractInfo.name}

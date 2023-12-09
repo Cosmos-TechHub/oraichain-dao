@@ -11,6 +11,7 @@ import { Button } from "antd";
 import { useChain } from "@cosmos-kit/react";
 
 import DaoImage from "@/assets/image/dao.png";
+import OraiImage from '@/assets/image/new-orai.png'
 import { network } from "@/config";
 import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
 import { ArrayOfProposalModule } from "@/codegen/DaoDaoCore.types";
@@ -83,7 +84,7 @@ const DaoPage = () => {
             <div className="h-full flex flex-col justify-center items-center px-10 pb-8 border-b border-custom-grey-hover">
               <Image
                 src={
-                  daoContractInfo.imageUrl ? daoContractInfo.imageUrl : DaoImage
+                  daoContractInfo.imageUrl ? daoContractInfo.imageUrl : OraiImage
                 }
                 alt="dao img"
                 className="w-[134px] h-[134px]"

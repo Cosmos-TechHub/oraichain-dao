@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 
 import DaoIcon from "@/assets/image/dao-icon.svg";
+import OraiIcon from '@/assets/image/orai.svg'
 import { SingleChoiceProposal } from "@/codegen/types";
 
 interface IProposalInfo {
@@ -21,7 +22,7 @@ const ProposalInfo = ({ proposal }: IProposalInfo) => {
         <>
           <div className="grid grid-cols-2 items-center">
             <div className="flex items-center gap-4 text-[18px] text-custom-grey-grey">
-              <Image src={DaoIcon} alt="dao icon" width={25} height={25} />
+              <Image src={OraiIcon} alt="dao icon" width={25} height={25} />
               <h1>DAO</h1>
             </div>
             <p className="text-[20px] font-semibold text-custom-black-grey">
