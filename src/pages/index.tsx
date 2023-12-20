@@ -3,13 +3,15 @@ import { Inter } from "next/font/google";
 
 // import { network, daoInfo } from "@/config";
 import DaoCard from "@/components/DaoCard";
-import { daoInfo, network, voterAddress } from "@/config";
+import { daoInfo, network, stakingRewardAddress, voterAddress } from "@/config";
 import { useChain } from "@cosmos-kit/react";
 import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
 import { toBinary } from "@cosmjs/cosmwasm-stargate";
 
 import { useAppDispatch, useAppSelector } from "@/config/redux";
 import { increment, decrement } from "@/reducers/counter";
+import { Cw20StakeRewardDistributorClient } from "@/codegen/Cw20StakeRewardDistributor.client";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +40,21 @@ export default function Home() {
 
       const { balance } = await cw20Client.balance({
         address: daoInfo.staking_addr,
+      });
+      console.log(balance);
+    }
+  };
+
+  const handleShowBalance = async () => {
+    const client = await getSigningCosmWasmClient();
+    if (address) {
+      const cw20Client = new Cw20BaseClient(
+        client,
+        address,
+        daoInfo.token_addr
+      );
+      const { balance } = await cw20Client.balance({
+        address: stakingRewardAddress,
       });
       console.log(balance);
     }
@@ -83,6 +100,21 @@ export default function Home() {
     }
   };
 
+  const handleDistribute = async () => {
+    if (address) {
+      const client = await getSigningCosmWasmClient();
+      const stakingRewardClient = new Cw20StakeRewardDistributorClient(
+        client,
+        address,
+        stakingRewardAddress
+      );
+
+      await stakingRewardClient.distribute();
+    }
+  };
+
+  const [text, setText] = useState("");
+
   return (
     <div id="home" className="flex flex-col">
       <h1 className="text-[20px] font-semibold mb-8">Featured DAOs</h1>
@@ -95,9 +127,20 @@ export default function Home() {
         <button onClick={handleStakeToken}>stake token</button>
         <button onClick={handleSendToAlice}>send token to alice</button>
         <button onClick={handleSendToBob}>send token to bob</button>
+        <button onClick={handleShowBalance}>show balance</button>
+        <button onClick={handleDistribute}>distribute</button>
       </div> */}
 
-      <div className="mt-6 flex items-center justify-around">
+      <div>
+        <input
+          className="border border-black"
+          type="text"
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+        />
+      </div>
+
+      {/* <div className="mt-6 flex items-center justify-around">
         <button
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
@@ -111,7 +154,7 @@ export default function Home() {
         >
           Decrement
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

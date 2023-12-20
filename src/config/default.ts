@@ -40,3 +40,5 @@ export const voterAddress = {
   alice: 'orai1cknd27x0244595pp7a5c9sdekl3ywl52x62ssn',
   bob: 'orai1rh7c73ulzlnaephwjc27sjpql53fape4ywlglx'
 }
+
+export const stakingRewardAddress = 'orai186q3epz38xe9cttevz5yk402tsrmws9v98xslfj23257g70xl8hsnzjl0f';

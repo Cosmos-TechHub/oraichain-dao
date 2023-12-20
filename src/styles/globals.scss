@@ -16,3 +16,62 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.ant-modal .ant-modal-title {
+  @apply text-xl mb-4;
+}
+
+.ant-modal .ant-modal-content  {
+  @apply px-8 pt-8 pb-5;
+}
+
+.ant-modal .ant-tabs .ant-tabs-tab+.ant-tabs-tab {
+  @apply m-0;
+}
+
+.ant-modal .ant-tabs >.ant-tabs-nav {
+  @apply pb-6 border-b border-custom-grey-card;
+}
+
+.ant-modal .ant-tabs-top >.ant-tabs-nav .ant-tabs-ink-bar {
+  @apply h-full rounded-lg;
+}
+.ant-modal .ant-tabs .ant-tabs-ink-bar {
+  @apply bg-custom-grey-hover z-[-1];
+}
+
+.ant-modal .ant-tabs-top >.ant-tabs-nav::before {
+  @apply border-none;
+}
+
+.ant-modal .ant-tabs .ant-tabs-tab  {
+  @apply text-base w-full flex justify-center bg-custom-grey-card rounded-lg;
+}
+
+.ant-modal .ant-tabs .ant-tabs-tab:hover {
+  @apply text-black opacity-90;
+}
+
+.ant-modal .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  @apply text-black;
+}
+
+.ant-modal .ant-tabs >.ant-tabs-nav .ant-tabs-nav-list {
+  @apply w-full grid grid-cols-2;
+}
+
+.ant-modal .ant-btn-primary {
+  @apply bg-custom-black-grey text-[18px] h-auto px-4 ;
+}
+
+.ant-modal .ant-btn-primary:disabled {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.ant-modal .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  @apply bg-custom-black-grey opacity-90;
+}
+
+.ant-modal .ant-modal-footer {
+  @apply mt-8;
+}

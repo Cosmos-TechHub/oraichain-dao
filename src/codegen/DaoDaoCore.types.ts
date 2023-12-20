@@ -1,11 +1,4 @@
-export type Admin = {
-  address: {
-    addr: string;
-  };
-} | {
-  core_module: {};
-};
-export type Binary = string;
+import {Admin, Binary, ModuleInstantiateInfo, CosmosMsgForEmpty, BankMsg, Uint128, StakingMsg, DistributionMsg, IbcMsg, Timestamp, Uint64, WasmMsg, GovMsg, VoteOption, Duration, Coin, Empty, IbcTimeout, IbcTimeoutBlock, Cw20ReceiveMsg, Cw721ReceiveMsg, PreProposeInfo, Addr, Expiration, ContractVersion, ArrayOfString} from "./types";
 export interface InstantiateMsg {
   admin?: string | null;
   automatically_add_cw20s: boolean;
@@ -21,12 +14,6 @@ export interface InstantiateMsg {
 export interface InitialItem {
   key: string;
   value: string;
-}
-export interface ModuleInstantiateInfo {
-  admin?: Admin | null;
-  code_id: number;
-  label: string;
-  msg: Binary;
 }
 export type ExecuteMsg = {
   execute_admin_msgs: {
@@ -90,148 +77,6 @@ export type ExecuteMsg = {
     to_remove: string[];
   };
 };
-export type CosmosMsgForEmpty = {
-  bank: BankMsg;
-} | {
-  custom: Empty;
-} | {
-  staking: StakingMsg;
-} | {
-  distribution: DistributionMsg;
-} | {
-  stargate: {
-    type_url: string;
-    value: Binary;
-  };
-} | {
-  ibc: IbcMsg;
-} | {
-  wasm: WasmMsg;
-} | {
-  gov: GovMsg;
-};
-export type BankMsg = {
-  send: {
-    amount: Coin[];
-    to_address: string;
-  };
-} | {
-  burn: {
-    amount: Coin[];
-  };
-};
-export type Uint128 = string;
-export type StakingMsg = {
-  delegate: {
-    amount: Coin;
-    validator: string;
-  };
-} | {
-  undelegate: {
-    amount: Coin;
-    validator: string;
-  };
-} | {
-  redelegate: {
-    amount: Coin;
-    dst_validator: string;
-    src_validator: string;
-  };
-};
-export type DistributionMsg = {
-  set_withdraw_address: {
-    address: string;
-  };
-} | {
-  withdraw_delegator_reward: {
-    validator: string;
-  };
-};
-export type IbcMsg = {
-  transfer: {
-    amount: Coin;
-    channel_id: string;
-    timeout: IbcTimeout;
-    to_address: string;
-  };
-} | {
-  send_packet: {
-    channel_id: string;
-    data: Binary;
-    timeout: IbcTimeout;
-  };
-} | {
-  close_channel: {
-    channel_id: string;
-  };
-};
-export type Timestamp = Uint64;
-export type Uint64 = string;
-export type WasmMsg = {
-  execute: {
-    contract_addr: string;
-    funds: Coin[];
-    msg: Binary;
-  };
-} | {
-  instantiate: {
-    admin?: string | null;
-    code_id: number;
-    funds: Coin[];
-    label: string;
-    msg: Binary;
-  };
-} | {
-  migrate: {
-    contract_addr: string;
-    msg: Binary;
-    new_code_id: number;
-  };
-} | {
-  update_admin: {
-    admin: string;
-    contract_addr: string;
-  };
-} | {
-  clear_admin: {
-    contract_addr: string;
-  };
-};
-export type GovMsg = {
-  vote: {
-    proposal_id: number;
-    vote: VoteOption;
-  };
-};
-export type VoteOption = "yes" | "no" | "abstain" | "no_with_veto";
-export type Duration = {
-  height: number;
-} | {
-  time: number;
-};
-export interface Coin {
-  amount: Uint128;
-  denom: string;
-}
-export interface Empty {}
-export interface IbcTimeout {
-  block?: IbcTimeoutBlock | null;
-  timestamp?: Timestamp | null;
-}
-export interface IbcTimeoutBlock {
-  height: number;
-  revision: number;
-}
-export interface Cw20ReceiveMsg {
-  amount: Uint128;
-  msg: Binary;
-  sender: string;
-}
-export interface Cw721ReceiveMsg {
-  msg: Binary;
-  sender: string;
-  token_id: string;
-}
 export interface Config {
   automatically_add_cw20s: boolean;
   automatically_add_cw721s: boolean;
@@ -319,13 +164,6 @@ export type MigrateMsg = {
 } | {
   from_compatible: {};
 };
-export type PreProposeInfo = {
-  anyone_may_propose: {};
-} | {
-  module_may_propose: {
-    info: ModuleInstantiateInfo;
-  };
-};
 export interface MigrateParams {
   migrator_code_id: number;
   params: MigrateV1ToV2;
@@ -356,7 +194,6 @@ export interface V2CodeIds {
   cw4_voting: number;
   proposal_single: number;
 }
-export type Addr = string;
 export type ProposalModuleStatus = "enabled" | "disabled";
 export type ArrayOfProposalModule = ProposalModule[];
 export interface ProposalModule {
@@ -382,13 +219,6 @@ export type PauseInfoResponse = {
 } | {
   unpaused: {};
 };
-export type Expiration = {
-  at_height: number;
-} | {
-  at_time: Timestamp;
-} | {
-  never: {};
-};
 export interface DumpStateResponse {
   active_proposal_module_count: number;
   admin: Addr;
@@ -399,17 +229,12 @@ export interface DumpStateResponse {
   version: ContractVersion;
   voting_module: Addr;
 }
-export interface ContractVersion {
-  contract: string;
-  version: string;
-}
 export interface GetItemResponse {
   item?: string | null;
 }
 export interface InfoResponse {
   info: ContractVersion;
 }
-export type ArrayOfString = string[];
 export type ArrayOfSubDao = SubDao[];
 export interface ProposalModuleCountResponse {
   active_proposal_module_count: number;
