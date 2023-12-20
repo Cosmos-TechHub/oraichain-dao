@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 
 // import { network, daoInfo } from "@/config";
 import DaoCard from "@/components/DaoCard";
-import { daoInfo, network, stakingRewardAddress, voterAddress } from "@/config";
+import { daoInfo, network, stakingRewardAddress, stakingRewardOraiX, voterAddress } from "@/config";
 import { useChain } from "@cosmos-kit/react";
 import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
 import { toBinary } from "@cosmjs/cosmwasm-stargate";
@@ -106,7 +106,7 @@ export default function Home() {
       const stakingRewardClient = new Cw20StakeRewardDistributorClient(
         client,
         address,
-        stakingRewardAddress
+        stakingRewardOraiX
       );
 
       await stakingRewardClient.distribute();
@@ -118,27 +118,27 @@ export default function Home() {
   return (
     <div id="home" className="flex flex-col">
       <h1 className="text-[20px] font-semibold mb-8">Featured DAOs</h1>
-      <div className="w-full">
+      <div className="w-full flex gap-4">
         {dao.data.map((daoInfo) => (
           <DaoCard daoInfo={daoInfo} key={daoInfo.dao_addr} />
         ))}
       </div>
-      {/* <div className="mt-6 flex gap-6">
-        <button onClick={handleStakeToken}>stake token</button>
+      <div className="mt-6 flex gap-6">
+        {/* <button onClick={handleStakeToken}>stake token</button>
         <button onClick={handleSendToAlice}>send token to alice</button>
         <button onClick={handleSendToBob}>send token to bob</button>
-        <button onClick={handleShowBalance}>show balance</button>
+        <button onClick={handleShowBalance}>show balance</button> */}
         <button onClick={handleDistribute}>distribute</button>
-      </div> */}
+      </div>
 
-      <div>
+      {/* <div>
         <input
           className="border border-black"
           type="text"
           value={text}
           onChange={(event) => setText(event.target.value)}
         />
-      </div>
+      </div> */}
 
       {/* <div className="mt-6 flex items-center justify-around">
         <button

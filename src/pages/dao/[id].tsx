@@ -80,7 +80,7 @@ const DaoPage = () => {
     };
 
     getDaoInfo();
-  }, [router]);
+  }, [router.isReady]);
 
   useEffect(() => {
     const getStakingInfo = async () => {
@@ -88,7 +88,7 @@ const DaoPage = () => {
         const client = await getCosmWasmClient();
         const stakingClient = new Cw20StakeQueryClient(
           client,
-          "orai1khlsqw6pxzkmtulwp5uttw4ds6yvt07serz69wja2apjmthzd2pqvtv557"
+          daoContractInfo.stakingAddr
         );
 
         const stakedToken = await stakingClient.stakedBalanceAtHeight({
@@ -164,7 +164,7 @@ const DaoPage = () => {
                   </p>
                 </div>
 
-                {userStaked && (
+                {userStaked ? (
                   <div className="flex flex-col mt-10 gap-2 items-center">
                     <DollarOutlined className="text-[30px]" />
                     <div className="flex gap-3 items-center">
@@ -179,6 +179,10 @@ const DaoPage = () => {
                         {userStaked?.rewardToken + " oraiX"}
                       </p>
                     </div>
+                  </div>
+                ) : (
+                  <div>
+                    <LoadingOutlined className="text-lg" />
                   </div>
                 )}
               </div>
