@@ -42,6 +42,11 @@ const DaoPage = () => {
     stakedToken: string;
     rewardToken: string;
   } | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [reloadBalance, setReloadBalance] = useState<boolean>(false);
+
+  console.log(reloadBalance);
+  
 
   useEffect(() => {
     const getDaoInfo = async () => {
@@ -84,8 +89,12 @@ const DaoPage = () => {
 
   useEffect(() => {
     const getStakingInfo = async () => {
+      setLoading(true);
+
       if (daoContractInfo !== null && address) {
         const client = await getCosmWasmClient();
+        const block = await client.getBlock();
+        console.log(block.header.height)
         const stakingClient = new Cw20StakeQueryClient(
           client,
           daoContractInfo.stakingAddr
@@ -93,12 +102,16 @@ const DaoPage = () => {
 
         const stakedToken = await stakingClient.stakedBalanceAtHeight({
           address: address,
+          height: block.header.height + 1
         });
         const totalUserToken = await stakingClient.stakedValue({
           address: address,
         });
         const rewardToken =
           parseInt(totalUserToken.value) - parseInt(stakedToken.balance);
+
+        console.log(stakedToken, totalUserToken);
+
         setUserStaked({
           stakedToken: stakedToken.balance,
           rewardToken: rewardToken.toString(),
@@ -109,10 +122,11 @@ const DaoPage = () => {
           rewardToken: "0",
         });
       }
+      setLoading(false);
     };
 
     getStakingInfo();
-  }, [daoContractInfo, address]);
+  }, [daoContractInfo, address, reloadBalance]);
 
   const handleChangeToCreateProposal = () => {
     if (daoContractInfo) {
@@ -164,7 +178,11 @@ const DaoPage = () => {
                   </p>
                 </div>
 
-                {userStaked ? (
+                {loading ? (
+                  <div>
+                    <LoadingOutlined className="text-lg" />
+                  </div>
+                ) : (
                   <div className="flex flex-col mt-10 gap-2 items-center">
                     <DollarOutlined className="text-[30px]" />
                     <div className="flex gap-3 items-center">
@@ -180,10 +198,6 @@ const DaoPage = () => {
                       </p>
                     </div>
                   </div>
-                ) : (
-                  <div>
-                    <LoadingOutlined className="text-lg" />
-                  </div>
                 )}
               </div>
             </div>
@@ -195,6 +209,7 @@ const DaoPage = () => {
               <StakingModal
                 token_addr={daoContractInfo.tokenAddr}
                 staking_addr={daoContractInfo.stakingAddr}
+                setReloadBalance={setReloadBalance}
               />
             </div>
 

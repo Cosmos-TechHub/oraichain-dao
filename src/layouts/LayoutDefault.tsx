@@ -1,16 +1,18 @@
 import type { ReactNode } from "react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HomeOutlined, PlusOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 import Image from "next/image";
+import { useChain } from "@cosmos-kit/react";
 import { useRouter } from "next/router";
 
 import Header from "@/components/Header";
 import DaoSvg from "@/assets/image/dao.svg";
 import MenuItem from "antd/es/menu/MenuItem";
 import WrapperContent from "@/components/WrapperContent";
-import OraiSvg from '@/assets/image/orai.svg'
+import OraiSvg from "@/assets/image/orai.svg";
+import { network } from "@/config";
 
 type Props = {
   children: ReactNode;
@@ -37,7 +39,7 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem(
-    "ORAI DAO",
+    "ORAICHAIN DAO",
     "1",
     <div className="dao-icon">
       <Image src={OraiSvg} alt="dao icon" />
@@ -51,7 +53,11 @@ const LayoutDocument = ({
   children,
   title = "This is the default title",
 }: Props) => {
+  const { connect, openView, status, getCosmWasmClient } = useChain(
+    network.chainName
+  );
   const router = useRouter();
+
   const [collapsed, setCollapsed] = useState(false);
   const [currentKey, setCurrentKey] = useState("2");
 

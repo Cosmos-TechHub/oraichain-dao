@@ -10,12 +10,14 @@ import { Chain, AssetList } from "@chain-registry/types";
 import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
+import 'react-toastify/dist/ReactToastify.css';
+  // minified version is also included
+  // import 'react-toastify/dist/ReactToastify.min.css';
 
 import store, { persistor } from "@/config/redux";
 import "@/styles/globals.scss";
 // Import this in your top-level route/layout
 import "@interchain-ui/react/styles";
-import "react-toastify/dist/ReactToastify.css";
 import { network } from "@/config";
 import LayoutDefault from "@/layouts/LayoutDefault";
 
@@ -64,9 +66,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           {getLayout(<Component {...pageProps} />)}
+          <ToastContainer />
         </PersistGate>
       </Provider>
-      <ToastContainer />
     </ChainProvider>
   );
 }

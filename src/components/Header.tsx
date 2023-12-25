@@ -1,33 +1,106 @@
 import { useChain } from "@cosmos-kit/react";
-import { MouseEventHandler } from "react";
 import { Button } from "antd";
 import { WalletStatus } from "@cosmos-kit/core";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { network } from "@/config";
+import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
+import { DaoProposalSingleQueryClient } from "@/codegen/DaoProposalSingle.client";
 
 const Header = () => {
-  const {
-    connect,
-    openView,
-    status,
-    username,
-    address,
-    message,
-    wallet,
-    chain: chainInfo,
-  } = useChain(network.chainName);
-  console.log(status);
-  
+  const { connect, openView, status, getCosmWasmClient } = useChain(
+    network.chainName
+  );
+  const router = useRouter();
 
   const handleConnectWallet = async () => {
     await connect();
   };
 
-  const ConnectButton = ({
-    walletStatus,
-  }: {
-    walletStatus: WalletStatus;
-  }) => {
+  const [daoInfo, setdaoInfo] = useState<{
+    dao_addr: string;
+    dao_name: string;
+  }>();
+  const [headerTitle, setHeaderTitle] = useState<string>("");
+
+  useEffect(() => {
+    const getHeaderTitle = async () => {
+      if (router.isReady) {
+        const client = await getCosmWasmClient();
+        const header = router.pathname.split("/");
+        console.log(header);
+
+        let headerTitle: string = "";
+
+        switch (header.at(1)) {
+          case "":
+            headerTitle = "Home";
+            break;
+          case "dao":
+            const daoAddr = router.query.id as string;
+            const daoClient = new DaoDaoCoreQueryClient(client, daoAddr);
+            const daoConfig = await daoClient.config();
+            headerTitle = daoConfig.name + " DAO";
+            headerTitle.toUpperCase();
+            setdaoInfo({ dao_addr: daoAddr, dao_name: daoConfig.name });
+            break;
+          case "proposal":
+            const proposalInfo = router.query.id as string[];
+            const proposalClient = new DaoProposalSingleQueryClient(
+              client,
+              proposalInfo[0]
+            );
+            const proposal = await proposalClient.proposal({
+              proposalId: parseInt(proposalInfo[1]),
+            });
+
+            const proposalDao = await proposalClient.dao();
+
+            if (!daoInfo || daoInfo.dao_addr !== proposalDao) {
+              const proposalDaoClient = new DaoDaoCoreQueryClient(
+                client,
+                proposalDao
+              );
+              const proposalDaoConfig = await proposalDaoClient.config();
+              headerTitle =
+                proposalDaoConfig.name + " > " + proposal.proposal.title;
+            } else {
+              headerTitle = daoInfo.dao_name + " > " + proposal.proposal.title;
+            }
+            break;
+          case "create-proposal":
+            const createProposalInfo = router.query.id as string;
+            const createProposalClient = new DaoProposalSingleQueryClient(
+              client,
+              createProposalInfo
+            );
+            const createProposalDao = await createProposalClient.dao();
+
+            if (!daoInfo || daoInfo.dao_addr !== createProposalDao) {
+              const createProposalDaoClient = new DaoDaoCoreQueryClient(
+                client,
+                createProposalDao
+              );
+              const createProposalDaoConfig =
+                await createProposalDaoClient.config();
+              headerTitle = createProposalDaoConfig.name + " > create proposal";
+            } else {
+              headerTitle = daoInfo.dao_name + " > create proposal";
+            }
+            break;
+          default:
+            break;
+        }
+
+        setHeaderTitle(headerTitle);
+      }
+    };
+
+    getHeaderTitle();
+  }, [router]);
+
+  const ConnectButton = ({ walletStatus }: { walletStatus: WalletStatus }) => {
     switch (walletStatus) {
       case WalletStatus.Disconnected:
         return <Button onClick={handleConnectWallet}>Connect wallet</Button>;
@@ -41,10 +114,8 @@ const Header = () => {
   };
 
   return (
-    <div
-      id="header"
-    >
-      <h1 className="text-[26px] font-semibold">DAO SIMPLE</h1>
+    <div id="header">
+      <h1 className="text-[26px] font-semibold">ORAIX Gorvernance</h1>
       <div className="mr-32">
         <ConnectButton walletStatus={status} />
       </div>

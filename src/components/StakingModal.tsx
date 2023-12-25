@@ -4,7 +4,6 @@ import type { TabsProps } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { useChain } from "@cosmos-kit/react";
 import { toBinary } from "@cosmjs/cosmwasm-stargate";
-import { useRouter } from "next/router";
 
 import { network } from "@/config";
 import {
@@ -16,14 +15,19 @@ import {
   Cw20StakeQueryClient,
 } from "@/codegen/Cw20Stake.client";
 import { Duration } from "@/codegen/types";
+import { toast } from "react-toastify";
 
 export interface IStakingModal {
   token_addr: string;
   staking_addr: string;
+  setReloadBalance: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const StakingModal = ({ token_addr, staking_addr }: IStakingModal) => {
-  const router = useRouter();
+const StakingModal = ({
+  token_addr,
+  staking_addr,
+  setReloadBalance,
+}: IStakingModal) => {
   const { getCosmWasmClient, getSigningCosmWasmClient, address } = useChain(
     network.chainName
   );
@@ -120,30 +124,45 @@ const StakingModal = ({ token_addr, staking_addr }: IStakingModal) => {
 
   const handleOk = async () => {
     setLoading(true);
-    if (address) {
-      const client = await getSigningCosmWasmClient();
+    try {
+      if (address) {
+        const client = await getSigningCosmWasmClient();
 
-      if (activeTab === "1") {
-        const tokenClient = new Cw20BaseClient(client, address, token_addr);
-        await tokenClient.send({
-          amount: token.toString(),
-          contract: staking_addr,
-          msg: toBinary({
-            stake: {},
-          }),
-        });
-      } else {
-        const stakingClient = new Cw20StakeClient(
-          client,
-          address,
-          staking_addr
-        );
-        await stakingClient.unstake({ amount: token.toString() });
+        if (activeTab === "1") {
+          const tokenClient = new Cw20BaseClient(client, address, token_addr);
+          await tokenClient.send({
+            amount: token.toString(),
+            contract: staking_addr,
+            msg: toBinary({
+              stake: {},
+            }),
+          });
+          toast.success("Stake token success !", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        } else {
+          const stakingClient = new Cw20StakeClient(
+            client,
+            address,
+            staking_addr
+          );
+          await stakingClient.unstake({ amount: token.toString() });
+          toast.success("Unstake token success !", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
       }
+    } catch (err: any) {
+      console.log(err);
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
     setLoading(false);
+    setToken(0);
     setIsModalOpen(false);
-    router.reload();
+    // location.reload();
+    setReloadBalance((prev) => !prev);
   };
 
   const handleCancel = () => {

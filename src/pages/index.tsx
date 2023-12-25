@@ -3,10 +3,17 @@ import { Inter } from "next/font/google";
 
 // import { network, daoInfo } from "@/config";
 import DaoCard from "@/components/DaoCard";
-import { daoInfo, network, stakingRewardAddress, stakingRewardOraiX, voterAddress } from "@/config";
+import {
+  daoInfo,
+  network,
+  stakingRewardAddress,
+  stakingRewardOraiX,
+  voterAddress,
+} from "@/config";
 import { useChain } from "@cosmos-kit/react";
 import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
 import { toBinary } from "@cosmjs/cosmwasm-stargate";
+import { toast } from "react-toastify";
 
 import { useAppDispatch, useAppSelector } from "@/config/redux";
 import { increment, decrement } from "@/reducers/counter";
@@ -101,15 +108,25 @@ export default function Home() {
   };
 
   const handleDistribute = async () => {
-    if (address) {
-      const client = await getSigningCosmWasmClient();
-      const stakingRewardClient = new Cw20StakeRewardDistributorClient(
-        client,
-        address,
-        stakingRewardOraiX
-      );
+    try {
+      if (address) {
+        const client = await getSigningCosmWasmClient();
+        const stakingRewardClient = new Cw20StakeRewardDistributorClient(
+          client,
+          address,
+          stakingRewardOraiX
+        );
 
-      await stakingRewardClient.distribute();
+        await stakingRewardClient.distribute();
+        toast.success("Distribute reward success !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    } catch (err: any) {
+      console.log(err);
+      toast.error(err, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 
@@ -128,7 +145,12 @@ export default function Home() {
         <button onClick={handleSendToAlice}>send token to alice</button>
         <button onClick={handleSendToBob}>send token to bob</button>
         <button onClick={handleShowBalance}>show balance</button> */}
-        <button onClick={handleDistribute}>distribute</button>
+        <button
+          onClick={handleDistribute}
+          className="px-4 py-2 bg-custom-grey-card rounded-xl"
+        >
+          distribute
+        </button>
       </div>
 
       {/* <div>

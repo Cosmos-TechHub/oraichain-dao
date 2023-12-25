@@ -65,7 +65,7 @@ const Proposal = () => {
         console.log(err);
 
         setLoadingVote(false);
-        toast.error("Vote error !", {
+        toast.error(err, {
           position: toast.POSITION.TOP_RIGHT,
         });
       }

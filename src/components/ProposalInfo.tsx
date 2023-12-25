@@ -38,7 +38,7 @@ const ProposalInfo = ({ proposal }: IProposalInfo) => {
               {proposal.status}
             </p>
           </div>
-          <div className="grid grid-cols-2 items-center">
+          {/* <div className="grid grid-cols-2 items-center">
             <div className="flex items-center gap-4 text-[18px] text-custom-grey-grey">
               <DollarOutlined className="text-[22px]" />
               <h1>Deposited</h1>
@@ -46,7 +46,7 @@ const ProposalInfo = ({ proposal }: IProposalInfo) => {
             <p className="text-[20px] font-semibold text-custom-black-grey">
               1,600 $OSMO
             </p>
-          </div>
+          </div> */}
           <div className="grid grid-cols-2 items-center">
             <div className="flex items-center gap-4 text-[18px] text-custom-grey-grey">
               <FieldTimeOutlined className="text-[22px]" />
