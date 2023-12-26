@@ -59,7 +59,7 @@ const Proposal = () => {
           const proposal = await proposalQueryClient.proposal({
             proposalId: Number(proposalPathInfo.proposal_id),
           });
-          setProposalInfo(proposal.proposal)
+          setProposalInfo(proposal.proposal);
         }
       } catch (err: any) {
         console.log(err);
@@ -124,43 +124,50 @@ const Proposal = () => {
 
         <ProposalInfo proposal={proposalInfo} />
 
-        {status === "Connected" && (
-          <div className="pt-8 border-t border-secondary-grey-bg">
-            <Form
-              name="basic"
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              style={{ maxWidth: 600 }}
-              initialValues={{ remember: true }}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="off"
-            >
-              <Form.Item<FieldType> label="Voting" name="voting">
-                <Radio.Group>
-                  <Radio value="yes">
-                    <span>Yes</span>
-                    <CheckOutlined className="text-[20px]" />
-                  </Radio>
-                  <Radio value="no">
-                    <span>No</span>
-                    <CloseOutlined className="text-[20px]" />
-                  </Radio>
-                  <Radio value="abstain">
-                    <span>Abstain</span>
-                    <BorderOuterOutlined className="text-[20px]" />
-                  </Radio>
-                </Radio.Group>
-              </Form.Item>
+        {status === "Connected" &&
+          proposalInfo &&
+          (proposalInfo.status === "open" ||
+            proposalInfo.status === "passed") && (
+            <div className="pt-8 border-t border-secondary-grey-bg">
+              <Form
+                name="basic"
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+                style={{ maxWidth: 600 }}
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+              >
+                <Form.Item<FieldType> label="Voting" name="voting">
+                  <Radio.Group>
+                    <Radio value="yes">
+                      <span>Yes</span>
+                      <CheckOutlined className="text-[20px]" />
+                    </Radio>
+                    <Radio value="no">
+                      <span>No</span>
+                      <CloseOutlined className="text-[20px]" />
+                    </Radio>
+                    <Radio value="abstain">
+                      <span>Abstain</span>
+                      <BorderOuterOutlined className="text-[20px]" />
+                    </Radio>
+                  </Radio.Group>
+                </Form.Item>
 
-              <Form.Item>
-                <Button type="primary" htmlType="submit" loading={loadingVote}>
-                  Cast your vote
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
-        )}
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={loadingVote}
+                  >
+                    Cast your vote
+                  </Button>
+                </Form.Item>
+              </Form>
+            </div>
+          )}
       </div>
 
       <div className="col-span-5 flex flex-col">
@@ -168,9 +175,7 @@ const Proposal = () => {
           Nois - Store the Randdrop Contract
         </h1>
         <div className="flex flex-col gap-6">
-          <p className="text-[16px] text-third-grey font-medium">
-            November 30
-          </p>
+          <p className="text-[16px] text-third-grey font-medium">November 30</p>
           <p className="text-[16px] text-secondary-grey pr-6 tracking-wider leading-6">
             This proposal aims to store the Wasm code for the nois-randdrop
             contract. Once instantiated it will allow eligible stakers to

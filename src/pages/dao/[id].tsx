@@ -46,7 +46,6 @@ const DaoPage = () => {
   const [reloadBalance, setReloadBalance] = useState<boolean>(false);
 
   console.log(reloadBalance);
-  
 
   useEffect(() => {
     const getDaoInfo = async () => {
@@ -94,7 +93,7 @@ const DaoPage = () => {
       if (daoContractInfo !== null && address) {
         const client = await getCosmWasmClient();
         const block = await client.getBlock();
-        console.log(block.header.height)
+        console.log(block.header.height);
         const stakingClient = new Cw20StakeQueryClient(
           client,
           daoContractInfo.stakingAddr
@@ -102,7 +101,7 @@ const DaoPage = () => {
 
         const stakedToken = await stakingClient.stakedBalanceAtHeight({
           address: address,
-          height: block.header.height + 1
+          height: block.header.height + 1,
         });
         const totalUserToken = await stakingClient.stakedValue({
           address: address,
@@ -160,14 +159,14 @@ const DaoPage = () => {
               <h1 className="mt-4 text-[32px] font-semibold">
                 {daoContractInfo.name}
               </h1>
-              <p className="text-[18px] text-primary-grey font-semibold">
+              {/* <p className="text-[18px] text-primary-grey font-semibold">
                 Est. September 8
-              </p>
+              </p> */}
               <p className="text-[18px] font-medium mt-4 text-[#374151]">
                 {daoContractInfo.description}
               </p>
               <div className="w-full flex justify-around items-center">
-                <div className="flex flex-col mt-10 gap-2 items-center">
+                {/* <div className="flex flex-col mt-10 gap-2 items-center">
                   <BankOutlined className="text-[30px] " />
                   <div className="flex gap-3 items-center">
                     <p className="text-sm text-primary-grey">DAO Treasury</p>
@@ -176,29 +175,33 @@ const DaoPage = () => {
                   <p className="text-lg font-medium text-secondary-grey">
                     $102.25 M est. USD value
                   </p>
-                </div>
+                </div> */}
 
-                {loading ? (
-                  <div>
-                    <LoadingOutlined className="text-lg" />
-                  </div>
-                ) : (
-                  <div className="flex flex-col mt-10 gap-2 items-center">
-                    <DollarOutlined className="text-[30px]" />
-                    <div className="flex gap-3 items-center">
-                      <p className="text-sm text-primary-grey">Staked token:</p>
-                      <p className="text-sm font-medium text-secondary-grey">
-                        {userStaked?.stakedToken + " oraiX"}
-                      </p>
-                    </div>
-                    <div className="flex gap-3 items-center mt-1">
-                      <p className="text-sm text-primary-grey">Reward token:</p>
-                      <p className="text-sm font-medium text-secondary-grey">
-                        {userStaked?.rewardToken + " oraiX"}
-                      </p>
-                    </div>
-                  </div>
-                )}
+                <div className="flex flex-col mt-10 gap-2 items-center">
+                  {loading ? (
+                    <LoadingOutlined className="text-xl" />
+                  ) : (
+                    <>
+                      <DollarOutlined className="text-[30px]" />
+                      <div className="flex gap-3 items-center">
+                        <p className="text-sm text-primary-grey">
+                          Staked token:
+                        </p>
+                        <p className="text-sm font-medium text-secondary-grey">
+                          {userStaked?.stakedToken + " oraiX"}
+                        </p>
+                      </div>
+                      <div className="flex gap-3 items-center mt-1">
+                        <p className="text-sm text-primary-grey">
+                          Reward token:
+                        </p>
+                        <p className="text-sm font-medium text-secondary-grey">
+                          {userStaked?.rewardToken + " oraiX"}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 

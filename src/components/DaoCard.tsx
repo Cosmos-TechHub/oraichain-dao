@@ -86,18 +86,18 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
             <h1 className="text-base text-black font-medium">
               {daoContractInfo.name}
             </h1>
-            <p className="text-xs text-primary-grey font-medium">September 8</p>
-            <p className="text-sm text-primary-grey font-medium">
+            {/* <p className="text-xs text-primary-grey font-medium">September 8</p> */}
+            <p className="text-sm text-primary-grey font-medium mt-2">
               {daoContractInfo.description}
             </p>
           </div>
           <div className="flex flex-col w-full gap-2 text-primary-grey">
-            <div className="flex text-sm items-center w-full gap-2">
+            {/* <div className="flex text-sm items-center w-full gap-2">
               <div>
                 <BankOutlined />
               </div>
               <h1>$ 102.25 M est. USD</h1>
-            </div>
+            </div> */}
             <div className="flex text-sm items-center w-full gap-2">
               <div>
                 <FileTextOutlined />

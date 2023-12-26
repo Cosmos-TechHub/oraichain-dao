@@ -99,7 +99,9 @@ const LayoutDocument = ({
       </Sider>
       <Layout>
         <Header />
-        <WrapperContent children={children} />
+        <WrapperContent>
+          {children}
+        </WrapperContent>
       </Layout>
     </Layout>
   );
