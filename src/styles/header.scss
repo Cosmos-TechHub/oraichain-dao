@@ -1,13 +1,13 @@
 #header {
-  @apply h-[101px] px-16 flex items-center justify-between bg-white fixed top-0 right-0 left-[360px];
+  @apply h-20 pl-16 pr-48 flex items-center justify-between bg-white fixed top-0 right-0 left-[300px] z-[1];
   transition: all 0.2s;
   border-bottom: 1px solid rgba(5, 5, 5, 0.06);
   border-top: 1px solid rgba(5, 5, 5, 0.06);
 
   .ant-btn {
-    font-size: 20px;
-    height: 46px;
-    padding: 8px 16px;
+    font-size: 17px;
+    height: auto;
+    padding: 6px 16px;
     border-radius: 6px;
   }
 }

@@ -1,6 +1,6 @@
 #layout {
   #content {
-    @apply mt-[101px] ml-[360px] py-10 px-16 bg-white;
+    @apply mt-20 ml-[300px] py-10 px-16 bg-white;
     transition: all 0.2s;
   }
 
@@ -15,14 +15,14 @@
   .ant-layout-sider-trigger {
     background: #fff;
     color: black;
-    font-size: 24px;
+    font-size: 20px;
     // z-index: 0;
   }
 
   aside {
-    width: 360px !important;
-    min-width: 360px !important;
-    max-width: 360px !important;
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
   }
   aside.ant-layout-sider-collapsed {
     width: 80px !important;
@@ -39,7 +39,7 @@
   }
 
   div.ant-layout-sider-trigger {
-    width: 360px !important;
+    width: 300px !important;
     border-right: 1px solid rgba(5, 5, 5, 0.06);
   }
 
@@ -54,12 +54,12 @@
 
   .ant-menu-inline .ant-menu-item,
   .ant-menu-vertical > .ant-menu-item {
-    height: 60px;
-    line-height: 60px;
+    height: 54px;
+    line-height: 54px;
   }
 
   .ant-menu .ant-menu-item .anticon {
-    font-size: 24px;
+    font-size: 22px;
     height: 100%;
   }
 
@@ -68,7 +68,7 @@
   }
 
   .ant-menu-title-content {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: #3e4144;
   }
@@ -78,10 +78,10 @@
   }
 
   .ant-menu-item:first-child {
-    @apply h-20 leading-[5rem] m-0 w-full rounded-none border-b mb-2;
+    @apply h-20 leading-[5rem] m-0 w-full rounded-none border-b mb-2 leading-[91px]; 
 
     .ant-menu-title-content {
-      @apply ml-4 text-black text-[28px];
+      @apply ml-8 text-black text-[22px] font-bold;
     }
   }
 

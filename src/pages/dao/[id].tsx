@@ -155,15 +155,15 @@ const DaoPage = () => {
                     : OraiDex
                 }
                 alt="dao img"
-                className="w-[134px] h-[134px]"
+                className="w-[124px] h-[124px]"
               />
-              <h1 className="mt-4 text-[32px] font-semibold">
+              <h1 className="mt-4 text-[28px] font-semibold">
                 {daoContractInfo.name}
               </h1>
               {/* <p className="text-[18px] text-primary-grey font-semibold">
                 Est. September 8
               </p> */}
-              <p className="text-[18px] font-medium mt-4 text-[#374151]">
+              <p className="text-[17px] font-medium mt-4 text-[#374151]">
                 {daoContractInfo.description}
               </p>
               <div className="w-full flex justify-around items-center">
@@ -183,21 +183,21 @@ const DaoPage = () => {
                     <LoadingOutlined className="text-xl" />
                   ) : (
                     <>
-                      <DollarOutlined className="text-[30px]" />
+                      <DollarOutlined className="text-[28px]" />
                       <div className="flex gap-3 items-center">
-                        <p className="text-sm text-primary-grey">
+                        <p className="text-base text-primary-grey">
                           Staked token:
                         </p>
-                        <p className="text-sm font-medium text-secondary-grey">
-                          {userStaked?.stakedToken + " oraiX"}
+                        <p className="text-base font-medium text-secondary-grey">
+                          {userStaked?.stakedToken + " ORAIX"}
                         </p>
                       </div>
                       <div className="flex gap-3 items-center mt-1">
-                        <p className="text-sm text-primary-grey">
+                        <p className="text-base text-primary-grey">
                           Reward token:
                         </p>
-                        <p className="text-sm font-medium text-secondary-grey">
-                          {userStaked?.rewardToken + " oraiX"}
+                        <p className="text-base font-medium text-secondary-grey">
+                          {userStaked?.rewardToken + " ORAIX"}
                         </p>
                       </div>
                     </>
@@ -207,7 +207,7 @@ const DaoPage = () => {
             </div>
 
             <div className="py-6 flex items-center justify-between border-b border-primary-grey-bg">
-              <h1 className="text-[20px] text-secondary-grey font-semibold">
+              <h1 className="text-[18px] text-secondary-grey font-semibold">
                 Manage your token
               </h1>
               <StakingModal
@@ -218,7 +218,7 @@ const DaoPage = () => {
             </div>
 
             <div className="py-6 flex items-center justify-between border-b border-primary-grey-bg">
-              <h1 className="text-[20px] text-secondary-grey font-semibold">
+              <h1 className="text-[18px] text-secondary-grey font-semibold">
                 Create a proposal
               </h1>
               <Button
@@ -234,7 +234,7 @@ const DaoPage = () => {
                 Proposals
               </h1>
               <div className="flex flex-col gap-5 w-full">
-                <h1 className="text-[18px] text-third-grey ml-4 font-semibold">
+                <h1 className="text-[16px] text-third-grey ml-4 font-semibold">
                   History {daoContractInfo.totalProposal} prposals
                 </h1>
                 <div className="w-full flex flex-col gap-2">

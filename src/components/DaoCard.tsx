@@ -70,7 +70,7 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
           ? { pathname: "/dao/[id]", query: { id: daoInfo.dao_addr } }
           : "/"
       }
-      className="w-64 min-h-[328px] p-8 rounded-lg flex flex-col gap-5 justify-around items-center bg-secondary-grey-bg hover:bg-primary-grey-bg"
+      className="w-[268px] min-h-[328px] p-8 rounded-lg flex flex-col gap-5 justify-around items-center bg-secondary-grey-bg hover:bg-primary-grey-bg"
     >
       {daoContractInfo === null ? (
         <LoadingOutlined className="text-[48px] text-primary-grey" />
@@ -82,7 +82,7 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
                 daoContractInfo.image_url ? daoContractInfo.image_url : OraiDex
               }
               alt="dao image"
-              className="w-[104px] h-[104px] mb-1"
+              className="w-[98px] h-[98px] mb-3"
             />
             <h1 className="text-base text-black font-medium">
               {daoContractInfo.name}

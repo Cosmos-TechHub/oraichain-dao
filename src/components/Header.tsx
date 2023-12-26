@@ -124,8 +124,8 @@ const Header = () => {
 
   return (
     <div id="header">
-      <h1 className="text-[26px] font-semibold">{headerTitle}</h1>
-      <div className="mr-32">
+      <h1 className="text-[24px] font-semibold">{headerTitle}</h1>
+      <div>
         <ConnectButton walletStatus={status} />
       </div>
     </div>
