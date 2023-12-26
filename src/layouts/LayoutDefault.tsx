@@ -8,7 +8,6 @@ import { useChain } from "@cosmos-kit/react";
 import { useRouter } from "next/router";
 
 import Header from "@/components/Header";
-import DaoSvg from "@/assets/image/dao.svg";
 import MenuItem from "antd/es/menu/MenuItem";
 import WrapperContent from "@/components/WrapperContent";
 import OraiSvg from "@/assets/image/orai.svg";

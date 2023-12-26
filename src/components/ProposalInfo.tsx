@@ -9,13 +9,15 @@ import {
 } from "@ant-design/icons";
 
 import OraiIcon from "@/assets/image/orai.svg";
+import OraiDex from '@/assets/image/oraidex.webp'
 import { SingleChoiceProposal } from "@/codegen/types";
 import { truncate } from "@/utils/truncate";
 interface IProposalInfo {
   proposal: SingleChoiceProposal | null;
+  daoName?: string
 }
 
-const ProposalInfo = ({ proposal }: IProposalInfo) => {
+const ProposalInfo = ({ proposal, daoName }: IProposalInfo) => {
   let dayLeft: number = 0;
   if (proposal) {
     const expireTime = proposal.expiration as { at_time: string };
@@ -31,11 +33,11 @@ const ProposalInfo = ({ proposal }: IProposalInfo) => {
         <>
           <div className="grid grid-cols-2 items-center">
             <div className="flex items-center gap-4 text-[18px] text-third-grey">
-              <Image src={OraiIcon} alt="dao icon" width={25} height={25} />
+              <Image src={OraiDex} alt="dao icon" width={25} height={25} />
               <h1>DAO</h1>
             </div>
             <p className="text-[20px] font-semibold text-secondary-grey">
-              {proposal.title}
+              {daoName}
             </p>
           </div>
           <div className="grid grid-cols-2 items-center">

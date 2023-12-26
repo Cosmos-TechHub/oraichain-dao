@@ -7,6 +7,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 import DaoImage from "@/assets/image/dao.png";
 import OraiImage from '@/assets/image/new-orai.png'
+import OraiDex from '@/assets/image/oraidex.webp';
 import { network } from "@/config";
 import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
 import { DaoProposalSingleQueryClient } from "@/codegen/DaoProposalSingle.client";
@@ -78,7 +79,7 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
           <div className="flex flex-col items-center">
             <Image
               src={
-                daoContractInfo.image_url ? daoContractInfo.image_url : OraiImage
+                daoContractInfo.image_url ? daoContractInfo.image_url : OraiDex
               }
               alt="dao image"
               className="w-[104px] h-[104px] mb-1"

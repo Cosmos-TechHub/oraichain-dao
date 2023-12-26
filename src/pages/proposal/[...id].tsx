@@ -17,6 +17,8 @@ import {
   DaoProposalSingleQueryClient,
 } from "@/codegen/DaoProposalSingle.client";
 import { SingleChoiceProposal } from "@/codegen/types";
+import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
+import { Config } from "@/codegen/DaoDaoCore.types";
 
 const Proposal = () => {
   const { getCosmWasmClient, getSigningCosmWasmClient, status, address } =
@@ -32,6 +34,7 @@ const Proposal = () => {
   const [proposalInfo, setProposalInfo] = useState<SingleChoiceProposal | null>(
     null
   );
+  const [daoConfig, setDaoConfig] = useState<Config>();
   const [loadingVote, setLoadingVote] = useState(false);
 
   const onFinish = async (values: any) => {
@@ -90,6 +93,9 @@ const Proposal = () => {
           client,
           routerPath[0]
         );
+        const dao = await newProposalClient.dao();
+        const daoClient = new DaoDaoCoreQueryClient(client, dao);
+        const daoConfig = await daoClient.config();
         const proposal = await newProposalClient.proposal({
           proposalId: Number(routerPath[1]),
         });
@@ -100,6 +106,7 @@ const Proposal = () => {
           proposal_id: routerPath[1],
         });
         setProposalInfo(proposal.proposal);
+        setDaoConfig(daoConfig);
       }
     };
 
@@ -122,7 +129,7 @@ const Proposal = () => {
           </p>
         </div>
 
-        <ProposalInfo proposal={proposalInfo} />
+        <ProposalInfo daoName={daoConfig?.name} proposal={proposalInfo} />
 
         {status === "Connected" &&
           proposalInfo &&
@@ -172,22 +179,12 @@ const Proposal = () => {
 
       <div className="col-span-5 flex flex-col">
         <h1 className="text-secondary-grey text-[32px] mb-12 font-bold">
-          Nois - Store the Randdrop Contract
+          {proposalInfo?.title}
         </h1>
         <div className="flex flex-col gap-6">
-          <p className="text-[16px] text-third-grey font-medium">November 30</p>
-          <p className="text-[16px] text-secondary-grey pr-6 tracking-wider leading-6">
-            This proposal aims to store the Wasm code for the nois-randdrop
-            contract. Once instantiated it will allow eligible stakers to
-            participate in the randdrop. Ps: If this proposal passes we would
-            raise another proposal to store the Nois proxy contract that acts as
-            an outpost contract on osmosis to allow requesting the unpredictable
-            randomness (Needed to conduct the randdrop). The snapshot that we
-            would use for the randdrop has been taken at height 12542000 and you
-            can check the full list of eligibility here
-            https://github.com/noislabs/randdrop-snapshots/tree/v0.1.0 For more
-            info check the forum post here
-            https://forum.osmosis.zone/t/proposal-for-deployment-of-nois-randdrop-contract-on-osmosis/646.
+          {/* <p className="text-[16px] text-third-grey font-medium">November 30</p> */}
+          <p className="text-[18px] text-secondary-grey pr-6 tracking-wider leading-6">
+            {proposalInfo?.description}
           </p>
         </div>
       </div>

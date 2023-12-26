@@ -13,6 +13,7 @@ import { useChain } from "@cosmos-kit/react";
 
 import DaoImage from "@/assets/image/dao.png";
 import OraiImage from "@/assets/image/new-orai.png";
+import OraiDex from '@/assets/image/oraidex.webp'
 import { network } from "@/config";
 import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
 import { ArrayOfProposalModule } from "@/codegen/DaoDaoCore.types";
@@ -151,7 +152,7 @@ const DaoPage = () => {
                 src={
                   daoContractInfo.imageUrl
                     ? daoContractInfo.imageUrl
-                    : OraiImage
+                    : OraiDex
                 }
                 alt="dao img"
                 className="w-[134px] h-[134px]"

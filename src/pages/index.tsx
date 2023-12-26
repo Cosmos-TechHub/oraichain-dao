@@ -140,18 +140,18 @@ export default function Home() {
           <DaoCard daoInfo={daoInfo} key={daoInfo.dao_addr} />
         ))}
       </div>
-      <div className="mt-6 flex gap-6">
-        {/* <button onClick={handleStakeToken}>stake token</button>
+      {/* <div className="mt-6 flex gap-6">
+        <button onClick={handleStakeToken}>stake token</button>
         <button onClick={handleSendToAlice}>send token to alice</button>
         <button onClick={handleSendToBob}>send token to bob</button>
-        <button onClick={handleShowBalance}>show balance</button> */}
+        <button onClick={handleShowBalance}>show balance</button>
         <button
           onClick={handleDistribute}
           className="px-4 py-2 bg-secondary-grey-bg rounded-xl"
         >
           distribute
         </button>
-      </div>
+      </div> */}
 
       {/* <div>
         <input
