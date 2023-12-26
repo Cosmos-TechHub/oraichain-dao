@@ -19,7 +19,7 @@ const ProposalStatus = ({ status }: { status: Status }) => {
   switch (status) {
     case "open":
       return (
-        <div className="flex items-center gap-2 text-[16px] text-custom-black-grey font-semibold">
+        <div className="flex items-center gap-2 text-[16px] text-secondary-grey font-semibold">
           <div>
             <ClockCircleFilled className="text-[18px]" />
           </div>
@@ -46,7 +46,7 @@ const ProposalStatus = ({ status }: { status: Status }) => {
       );
     case "executed":
       return (
-        <div className="flex items-center gap-2 text-[16px] text-custom-grey font-semibold">
+        <div className="flex items-center gap-2 text-[16px] text-primary-grey font-semibold">
           <div>
             <CheckCircleOutlined className="text-[18px]" />
           </div>
@@ -65,20 +65,20 @@ const ProposalItem = ({ addr, proposalId, proposalInfo }: IProposalItem) => {
         pathname: "/proposal/[...id]",
         query: { id: [addr, proposalId.toString()] },
       }}
-      className="w-full min-h-[60px] bg-custom-grey-card hover:bg-custom-grey-hover flex items-center justify-between px-6 rounded-md"
+      className="w-full min-h-[60px] bg-secondary-grey-bg hover:bg-primary-grey-bg flex items-center justify-between px-6 rounded-md"
     >
       <div className="flex flex-1 items-center gap-14">
         <div className="flex items-center gap-14 w-[28%]">
-          <h1 className="text-[16px] text-custom-grey font-semibold">
+          <h1 className="text-[16px] text-primary-grey font-semibold">
             A-{proposalId}
           </h1>
           <ProposalStatus status={proposalInfo.status} />
         </div>
-        <p className="text-[16px] text-custom-black-grey font-semibold flex-1">
+        <p className="text-[16px] text-secondary-grey font-semibold flex-1">
           {proposalInfo.title + " - " + proposalInfo.description}
         </p>
       </div>
-      <p className="text-[16px] text-custom-grey font-semibold">November 19</p>
+      <p className="text-[16px] text-primary-grey font-semibold">November 19</p>
     </Link>
   );
 };

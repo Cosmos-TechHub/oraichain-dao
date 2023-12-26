@@ -88,7 +88,7 @@ const CreateProposal = () => {
 
   return (
     <div id="create-proposal">
-      <h1 className="text-[20px] text-custom-black-grey font-semibold">
+      <h1 className="text-[20px] text-secondary-grey font-semibold">
         New proposal
       </h1>
 

@@ -85,7 +85,7 @@ const PickDaoType = () => {
           )}
         </Upload>
 
-        <div className="text-custom-grey text-lg font-semibold">
+        <div className="text-primary-grey text-lg font-semibold">
           Add an image
         </div>
       </div>
@@ -102,7 +102,7 @@ const PickDaoType = () => {
         form={form}
         onReset={onReset}
       >
-        <div className="bg-custom-grey-card px-6 pt-6 pb-2">
+        <div className="bg-secondary-grey-bg px-6 pt-6 pb-2">
           <Form.Item<FieldType>
             label="Name"
             name="daoName"

@@ -27,7 +27,7 @@ const Header = () => {
   useEffect(() => {
     const getHeaderTitle = async () => {
       if (router.isReady) {
-        const client = await getCosmWasmClient();
+        // const client = await getCosmWasmClient();
         const header = router.pathname.split("/");
         console.log(header);
 
@@ -38,57 +38,62 @@ const Header = () => {
             headerTitle = "Home";
             break;
           case "dao":
-            const daoAddr = router.query.id as string;
-            const daoClient = new DaoDaoCoreQueryClient(client, daoAddr);
-            const daoConfig = await daoClient.config();
-            headerTitle = daoConfig.name + " DAO";
-            headerTitle.toUpperCase();
-            setdaoInfo({ dao_addr: daoAddr, dao_name: daoConfig.name });
+            // const daoAddr = router.query.id as string;
+            // const daoClient = new DaoDaoCoreQueryClient(client, daoAddr);
+            // const daoConfig = await daoClient.config();
+            // headerTitle = daoConfig.name + " DAO";
+            // headerTitle.toUpperCase();
+            // setdaoInfo({ dao_addr: daoAddr, dao_name: daoConfig.name });
+            headerTitle = "ORAIX Governance"
             break;
           case "proposal":
-            const proposalInfo = router.query.id as string[];
-            const proposalClient = new DaoProposalSingleQueryClient(
-              client,
-              proposalInfo[0]
-            );
-            const proposal = await proposalClient.proposal({
-              proposalId: parseInt(proposalInfo[1]),
-            });
+            // const proposalInfo = router.query.id as string[];
+            // const proposalClient = new DaoProposalSingleQueryClient(
+            //   client,
+            //   proposalInfo[0]
+            // );
+            // const proposal = await proposalClient.proposal({
+            //   proposalId: parseInt(proposalInfo[1]),
+            // });
 
-            const proposalDao = await proposalClient.dao();
+            // const proposalDao = await proposalClient.dao();
 
-            if (!daoInfo || daoInfo.dao_addr !== proposalDao) {
-              const proposalDaoClient = new DaoDaoCoreQueryClient(
-                client,
-                proposalDao
-              );
-              const proposalDaoConfig = await proposalDaoClient.config();
-              headerTitle =
-                proposalDaoConfig.name + " > " + proposal.proposal.title;
-            } else {
-              headerTitle = daoInfo.dao_name + " > " + proposal.proposal.title;
-            }
+            // if (!daoInfo || daoInfo.dao_addr !== proposalDao) {
+            //   const proposalDaoClient = new DaoDaoCoreQueryClient(
+            //     client,
+            //     proposalDao
+            //   );
+            //   const proposalDaoConfig = await proposalDaoClient.config();
+            //   headerTitle =
+            //     proposalDaoConfig.name + " > " + proposal.proposal.title;
+            // } else {
+            //   headerTitle = daoInfo.dao_name + " > " + proposal.proposal.title;
+            // }
+            headerTitle = "Proposal"
             break;
           case "create-proposal":
-            const createProposalInfo = router.query.id as string;
-            const createProposalClient = new DaoProposalSingleQueryClient(
-              client,
-              createProposalInfo
-            );
-            const createProposalDao = await createProposalClient.dao();
+            // const createProposalInfo = router.query.id as string;
+            // const createProposalClient = new DaoProposalSingleQueryClient(
+            //   client,
+            //   createProposalInfo
+            // );
+            // const createProposalDao = await createProposalClient.dao();
 
-            if (!daoInfo || daoInfo.dao_addr !== createProposalDao) {
-              const createProposalDaoClient = new DaoDaoCoreQueryClient(
-                client,
-                createProposalDao
-              );
-              const createProposalDaoConfig =
-                await createProposalDaoClient.config();
-              headerTitle = createProposalDaoConfig.name + " > create proposal";
-            } else {
-              headerTitle = daoInfo.dao_name + " > create proposal";
-            }
+            // if (!daoInfo || daoInfo.dao_addr !== createProposalDao) {
+            //   const createProposalDaoClient = new DaoDaoCoreQueryClient(
+            //     client,
+            //     createProposalDao
+            //   );
+            //   const createProposalDaoConfig =
+            //     await createProposalDaoClient.config();
+            //   headerTitle = createProposalDaoConfig.name + " > create proposal";
+            // } else {
+            //   headerTitle = daoInfo.dao_name + " > create proposal";
+            // }
+            headerTitle = "Create proposal"
             break;
+          case "create-dao":
+            headerTitle = "Create DAO"
           default:
             break;
         }
@@ -113,9 +118,13 @@ const Header = () => {
     }
   };
 
+  const HeaderTitle = ({title} : {title: string[]}) => {
+
+  }
+
   return (
     <div id="header">
-      <h1 className="text-[26px] font-semibold">ORAIX Gorvernance</h1>
+      <h1 className="text-[26px] font-semibold">{headerTitle}</h1>
       <div className="mr-32">
         <ConnectButton walletStatus={status} />
       </div>

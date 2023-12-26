@@ -142,12 +142,12 @@ const DaoPage = () => {
     <div className="h-full" id="dao">
       <div className="flex flex-col">
         {daoContractInfo === null ? (
-          <div className="w-full min-h-screen flex justify-center items-start text-custom-grey">
+          <div className="w-full min-h-screen flex justify-center items-start text-primary-grey">
             <LoadingOutlined className="text-[60px] mt-40 " />
           </div>
         ) : (
           <>
-            <div className="h-full flex flex-col justify-center items-center px-10 pb-8 border-b border-custom-grey-hover">
+            <div className="h-full flex flex-col justify-center items-center px-10 pb-8 border-b border-primary-grey-bg">
               <Image
                 src={
                   daoContractInfo.imageUrl
@@ -160,7 +160,7 @@ const DaoPage = () => {
               <h1 className="mt-4 text-[32px] font-semibold">
                 {daoContractInfo.name}
               </h1>
-              <p className="text-[18px] text-custom-grey font-semibold">
+              <p className="text-[18px] text-primary-grey font-semibold">
                 Est. September 8
               </p>
               <p className="text-[18px] font-medium mt-4 text-[#374151]">
@@ -170,10 +170,10 @@ const DaoPage = () => {
                 <div className="flex flex-col mt-10 gap-2 items-center">
                   <BankOutlined className="text-[30px] " />
                   <div className="flex gap-3 items-center">
-                    <p className="text-sm text-custom-grey">DAO Treasury</p>
+                    <p className="text-sm text-primary-grey">DAO Treasury</p>
                     <ExclamationCircleOutlined className="text-sm" />
                   </div>
-                  <p className="text-lg font-medium text-custom-black-grey">
+                  <p className="text-lg font-medium text-secondary-grey">
                     $102.25 M est. USD value
                   </p>
                 </div>
@@ -186,14 +186,14 @@ const DaoPage = () => {
                   <div className="flex flex-col mt-10 gap-2 items-center">
                     <DollarOutlined className="text-[30px]" />
                     <div className="flex gap-3 items-center">
-                      <p className="text-sm text-custom-grey">Staked token:</p>
-                      <p className="text-sm font-medium text-custom-black-grey">
+                      <p className="text-sm text-primary-grey">Staked token:</p>
+                      <p className="text-sm font-medium text-secondary-grey">
                         {userStaked?.stakedToken + " oraiX"}
                       </p>
                     </div>
                     <div className="flex gap-3 items-center mt-1">
-                      <p className="text-sm text-custom-grey">Reward token:</p>
-                      <p className="text-sm font-medium text-custom-black-grey">
+                      <p className="text-sm text-primary-grey">Reward token:</p>
+                      <p className="text-sm font-medium text-secondary-grey">
                         {userStaked?.rewardToken + " oraiX"}
                       </p>
                     </div>
@@ -202,8 +202,8 @@ const DaoPage = () => {
               </div>
             </div>
 
-            <div className="py-6 flex items-center justify-between border-b border-custom-grey-hover">
-              <h1 className="text-[20px] text-custom-black-grey font-semibold">
+            <div className="py-6 flex items-center justify-between border-b border-primary-grey-bg">
+              <h1 className="text-[20px] text-secondary-grey font-semibold">
                 Manage your token
               </h1>
               <StakingModal
@@ -213,8 +213,8 @@ const DaoPage = () => {
               />
             </div>
 
-            <div className="py-6 flex items-center justify-between border-b border-custom-grey-hover">
-              <h1 className="text-[20px] text-custom-black-grey font-semibold">
+            <div className="py-6 flex items-center justify-between border-b border-primary-grey-bg">
+              <h1 className="text-[20px] text-secondary-grey font-semibold">
                 Create a proposal
               </h1>
               <Button
@@ -226,11 +226,11 @@ const DaoPage = () => {
             </div>
 
             <div className="py-6 flex flex-col items-start justify-between gap-8">
-              <h1 className="text-[20px] text-custom-black-grey font-semibold">
+              <h1 className="text-[20px] text-secondary-grey font-semibold">
                 Proposals
               </h1>
               <div className="flex flex-col gap-5 w-full">
-                <h1 className="text-[18px] text-custom-grey-grey ml-4 font-semibold">
+                <h1 className="text-[18px] text-third-grey ml-4 font-semibold">
                   History {daoContractInfo.totalProposal} prposals
                 </h1>
                 <div className="w-full flex flex-col gap-2">

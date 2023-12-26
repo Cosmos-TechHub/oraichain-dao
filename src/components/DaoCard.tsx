@@ -69,10 +69,10 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
           ? { pathname: "/dao/[id]", query: { id: daoInfo.dao_addr } }
           : "/"
       }
-      className="w-64 min-h-[328px] p-8 rounded-lg flex flex-col gap-5 justify-around items-center bg-custom-grey-card hover:bg-custom-grey-hover"
+      className="w-64 min-h-[328px] p-8 rounded-lg flex flex-col gap-5 justify-around items-center bg-secondary-grey-bg hover:bg-primary-grey-bg"
     >
       {daoContractInfo === null ? (
-        <LoadingOutlined className="text-[48px] text-custom-grey" />
+        <LoadingOutlined className="text-[48px] text-primary-grey" />
       ) : (
         <>
           <div className="flex flex-col items-center">
@@ -86,12 +86,12 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
             <h1 className="text-base text-black font-medium">
               {daoContractInfo.name}
             </h1>
-            <p className="text-xs text-custom-grey font-medium">September 8</p>
-            <p className="text-sm text-custom-grey font-medium">
+            <p className="text-xs text-primary-grey font-medium">September 8</p>
+            <p className="text-sm text-primary-grey font-medium">
               {daoContractInfo.description}
             </p>
           </div>
-          <div className="flex flex-col w-full gap-2 text-custom-grey">
+          <div className="flex flex-col w-full gap-2 text-primary-grey">
             <div className="flex text-sm items-center w-full gap-2">
               <div>
                 <BankOutlined />

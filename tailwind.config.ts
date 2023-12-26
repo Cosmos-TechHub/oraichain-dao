@@ -14,13 +14,13 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        'custom-grey': 'rgba( 36,38,40 ,0.5)',
-        'custom-grey-hover': 'rgba( 36,38,40 ,0.15)',
-        'custom-grey-card': 'rgba( 36,38,40 ,0.05)',
-        'custom-black-grey': 'rgba( 36,38,40 ,0.95)',
-        'custom-grey-grey': 'rgba( 36,38,40 ,0.7)',
-        'custom-purple': 'rgba( 123,97,255 ,0.95)',
-        'custom-purple-bg': 'rgba( 123,97,255 ,0.25)'
+        'primary-grey': 'rgba( 36,38,40 ,0.5)',
+        'primary-grey-bg': 'rgba( 36,38,40 ,0.15)',
+        'secondary-grey-bg': 'rgba( 36,38,40 ,0.05)',
+        'secondary-grey': 'rgba( 36,38,40 ,0.95)',
+        'third-grey': 'rgba( 36,38,40 ,0.7)',
+        'primary-purple': 'rgba( 123,97,255 ,0.95)',
+        'primary-purple-bg': 'rgba( 123,97,255 ,0.25)'
       }
     },
   },

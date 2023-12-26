@@ -53,7 +53,7 @@ const StakingModal = ({
       <div className="flex flex-col mt-3 gap-6">
         <h1 className="text-[22px] font-semibold">Choose token amount</h1>
         <div className="grid grid-cols-2">
-          <div className="w-full flex items-center justify-center gap-6 text-custom-grey">
+          <div className="w-full flex items-center justify-center gap-6 text-primary-grey">
             <button
               className="text-xl p-2"
               onClick={() => setToken((prev) => prev + 1)}
@@ -83,18 +83,18 @@ const StakingModal = ({
               onBlur={handleChange}
               className="outline-none text-right"
             />
-            <p className="text-custom-grey">$ORAIX</p>
+            <p className="text-primary-grey">$ORAIX</p>
           </div>
         </div>
-        <h1 className="text-[18px] text-custom-grey pb-6 border-b border-custom-grey-card">
+        <h1 className="text-[18px] text-primary-grey pb-6 border-b border-secondary-grey-bg">
           Your balance: {activeTab === "1" ? balance : stakedBalance} $ORAIX
         </h1>
         {unstakePeriod && (
-          <div className="border-b border-custom-grey-card pb-6">
-            <h1 className="text-lg text-custom-grey-grey mb-6">
+          <div className="border-b border-secondary-grey-bg pb-6">
+            <h1 className="text-lg text-third-grey mb-6">
               Unstaking period: 2 weeks
             </h1>
-            <p className="text-[19px] text-custom-grey-grey">
+            <p className="text-[19px] text-third-grey">
               It will take 2 weeks from the time you unstake your tokens before
               they are able to be redeemed by you. During that time, you will
               not receive staking rewards. You will not be able to cancel the

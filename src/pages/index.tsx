@@ -147,7 +147,7 @@ export default function Home() {
         <button onClick={handleShowBalance}>show balance</button> */}
         <button
           onClick={handleDistribute}
-          className="px-4 py-2 bg-custom-grey-card rounded-xl"
+          className="px-4 py-2 bg-secondary-grey-bg rounded-xl"
         >
           distribute
         </button>

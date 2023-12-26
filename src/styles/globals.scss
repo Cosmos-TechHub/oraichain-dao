@@ -30,14 +30,14 @@
 }
 
 .ant-modal .ant-tabs >.ant-tabs-nav {
-  @apply pb-6 border-b border-custom-grey-card;
+  @apply pb-6 border-b border-secondary-grey-bg;
 }
 
 .ant-modal .ant-tabs-top >.ant-tabs-nav .ant-tabs-ink-bar {
   @apply h-full rounded-lg;
 }
 .ant-modal .ant-tabs .ant-tabs-ink-bar {
-  @apply bg-custom-grey-hover z-[-1];
+  @apply bg-primary-grey-bg z-[-1];
 }
 
 .ant-modal .ant-tabs-top >.ant-tabs-nav::before {
@@ -45,7 +45,7 @@
 }
 
 .ant-modal .ant-tabs .ant-tabs-tab  {
-  @apply text-base w-full flex justify-center bg-custom-grey-card rounded-lg;
+  @apply text-base w-full flex justify-center bg-secondary-grey-bg rounded-lg;
 }
 
 .ant-modal .ant-tabs .ant-tabs-tab:hover {
@@ -61,7 +61,7 @@
 }
 
 .ant-modal .ant-btn-primary {
-  @apply bg-custom-black-grey text-[18px] h-auto px-4 ;
+  @apply bg-secondary-grey text-[18px] h-auto px-4 ;
 }
 
 .ant-modal .ant-btn-primary:disabled {
@@ -69,7 +69,7 @@
 }
 
 .ant-modal .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
-  @apply bg-custom-black-grey opacity-90;
+  @apply bg-secondary-grey opacity-90;
 }
 
 .ant-modal .ant-modal-footer {

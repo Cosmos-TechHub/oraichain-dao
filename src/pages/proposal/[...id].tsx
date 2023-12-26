@@ -111,7 +111,7 @@ const Proposal = () => {
   return (
     <div id="proposal">
       <div className="col-span-3 flex flex-col gap-8">
-        <div className="flex flex-col gap-3 text-[18px] text-custom-grey-grey ">
+        <div className="flex flex-col gap-3 text-[18px] text-third-grey ">
           <div className="flex items-center gap-3">
             <PicLeftOutlined className="text-[22px]" />
             <h1>Status</h1>
@@ -125,7 +125,7 @@ const Proposal = () => {
         <ProposalInfo proposal={proposalInfo} />
 
         {status === "Connected" && (
-          <div className="pt-8 border-t border-custom-grey-card">
+          <div className="pt-8 border-t border-secondary-grey-bg">
             <Form
               name="basic"
               labelCol={{ span: 24 }}
@@ -164,14 +164,14 @@ const Proposal = () => {
       </div>
 
       <div className="col-span-5 flex flex-col">
-        <h1 className="text-custom-black-grey text-[32px] mb-12 font-bold">
+        <h1 className="text-secondary-grey text-[32px] mb-12 font-bold">
           Nois - Store the Randdrop Contract
         </h1>
         <div className="flex flex-col gap-6">
-          <p className="text-[16px] text-custom-grey-grey font-medium">
+          <p className="text-[16px] text-third-grey font-medium">
             November 30
           </p>
-          <p className="text-[16px] text-custom-black-grey pr-6 tracking-wider leading-6">
+          <p className="text-[16px] text-secondary-grey pr-6 tracking-wider leading-6">
             This proposal aims to store the Wasm code for the nois-randdrop
             contract. Once instantiated it will allow eligible stakers to
             participate in the randdrop. Ps: If this proposal passes we would
