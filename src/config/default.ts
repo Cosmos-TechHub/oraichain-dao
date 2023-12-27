@@ -47,6 +47,19 @@ export const daoInfoOraiX = {
     "orai16yu93uyn0cg5f4m88g8nyqfh8xuq2wcs27a5342mnrs4yncxfv8qzxzq76",
 }
 
+export const oraiXDao = {
+  dao_addr: "orai1wrrtd59exascnq0l3yt7mppuptzzg0kwgsspj4p5ruwq3gfyp7uqvjukfn",
+  voting_addr:
+    "orai1vwej0tfase0xvwzn6rkm65ygs7xzxkktulsc2l6fnr49357hjc2qcdjuq8",
+  proposal_addr:
+    "orai1c7ncv2c8dap3zxmrpe879xn9warkx9kyhftrg2s9tr8c4a500fzqc4um4l",
+  token_addr: "orai1lus0f0rhx8s03gdllx2n6vhkmf0536dv57wfge",
+  staking_addr:
+    "orai1s0fy53uqtqhnjaqtv9szruv33ekss50vr3jmyzwhvqsqru00mrssmfjurz",
+}
+
+export const rewardOraiX = "orai1tqhglxyam0yuhwuuaxfgu4ytry9fa3v32vr0y9tyxk4rj4lvdnrqk8ug6l"
+
 export const voterAddress = {
   alice: 'orai1cknd27x0244595pp7a5c9sdekl3ywl52x62ssn',
   bob: 'orai1rh7c73ulzlnaephwjc27sjpql53fape4ywlglx'
