@@ -55,7 +55,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       signerOptions={signerOptions}
       endpointOptions={{
         endpoints: {
-          osmosistestnet: {
+          oraichain: {
             rpc: [network.rpc],
             isLazy: true,
           },
