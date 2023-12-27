@@ -23,7 +23,7 @@ const ProposalStatus = ({ status }: { status: Status }) => {
           <div>
             <ClockCircleFilled className="text-[18px]" />
           </div>
-          <p>Voting</p>
+          <p className="text-[15px]">Voting</p>
         </div>
       );
     case "rejected":
@@ -32,7 +32,7 @@ const ProposalStatus = ({ status }: { status: Status }) => {
           <div>
             <MinusCircleFilled className="text-[18px]" />
           </div>
-          <p>Rejected</p>
+          <p className="text-[15px]">Rejected</p>
         </div>
       );
     case "passed":
@@ -41,7 +41,7 @@ const ProposalStatus = ({ status }: { status: Status }) => {
           <div>
             <CheckCircleFilled className="text-[18px]" />
           </div>
-          <p>Passed</p>
+          <p className="text-[15px]">Passed</p>
         </div>
       );
     case "executed":
@@ -50,7 +50,7 @@ const ProposalStatus = ({ status }: { status: Status }) => {
           <div>
             <CheckCircleOutlined className="text-[18px]" />
           </div>
-          <p>Executed</p>
+          <p className="text-[15px]">Executed</p>
         </div>
       );
     default:
@@ -65,20 +65,20 @@ const ProposalItem = ({ addr, proposalId, proposalInfo }: IProposalItem) => {
         pathname: "/proposal/[...id]",
         query: { id: [addr, proposalId.toString()] },
       }}
-      className="w-full min-h-[60px] bg-secondary-grey-bg hover:bg-primary-grey-bg flex items-center justify-between px-6 rounded-md"
+      className="w-full bg-secondary-grey-bg hover:bg-primary-grey-bg flex items-center justify-between px-6 py-3 rounded-md"
     >
       <div className="flex flex-1 items-center gap-14">
         <div className="flex items-center gap-14 w-[28%]">
-          <h1 className="text-[16px] text-primary-grey font-semibold">
+          <h1 className="text-[15px] text-primary-grey font-semibold">
             A-{proposalId}
           </h1>
           <ProposalStatus status={proposalInfo.status} />
         </div>
-        <p className="text-[16px] text-secondary-grey font-semibold flex-1">
-          {proposalInfo.title + " - " + proposalInfo.description}
+        <p className="text-[15px] text-secondary-grey font-semibold flex-1">
+          {proposalInfo.title}
         </p>
       </div>
-      <p className="text-[16px] text-primary-grey font-semibold">November 19</p>
+      {/* <p className="text-[15px] text-primary-grey font-semibold">November 19</p> */}
     </Link>
   );
 };

@@ -14,7 +14,7 @@
         }
 
         .ant-form-item .ant-form-item-label >label {
-            @apply text-[17px] text-secondary-grey font-semibold;
+            @apply text-base text-secondary-grey font-semibold;
         }
 
         .ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
@@ -34,7 +34,7 @@
         }
 
         .ant-btn {
-            @apply px-[20px] py-[6px] text-[16px] h-auto min-w-[40px];
+            @apply px-[20px] py-[6px] text-[15px] h-auto min-w-[40px];
         }
 
         .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {

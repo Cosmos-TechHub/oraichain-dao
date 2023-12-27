@@ -23,6 +23,7 @@ import { ProposalListResponse } from "@/codegen/DaoProposalSingle.types";
 import { Cw20StakeQueryClient } from "@/codegen/Cw20Stake.client";
 import StakingModal from "@/components/StakingModal";
 import { DaoVotingCw20StakedQueryClient } from "@/codegen/DaoVotingCw20Staked.client";
+import { presentDecimal } from "@/utils/decimalToken";
 
 const DaoPage = () => {
   const router = useRouter();
@@ -143,7 +144,7 @@ const DaoPage = () => {
       <div className="flex flex-col">
         {daoContractInfo === null ? (
           <div className="w-full min-h-screen flex justify-center items-start text-primary-grey">
-            <LoadingOutlined className="text-[60px] mt-40 " />
+            <LoadingOutlined className="text-[40px] mt-40 " />
           </div>
         ) : (
           <>
@@ -155,15 +156,15 @@ const DaoPage = () => {
                     : OraiDex
                 }
                 alt="dao img"
-                className="w-[124px] h-[124px]"
+                className="w-[112px] h-[112px]"
               />
-              <h1 className="mt-4 text-[28px] font-semibold">
+              <h1 className="mt-4 text-[26px] font-semibold">
                 {daoContractInfo.name}
               </h1>
               {/* <p className="text-[18px] text-primary-grey font-semibold">
                 Est. September 8
               </p> */}
-              <p className="text-[17px] font-medium mt-4 text-[#374151]">
+              <p className="text-[16px] font-medium mt-4 text-[#374151]">
                 {daoContractInfo.description}
               </p>
               <div className="w-full flex justify-around items-center">
@@ -183,21 +184,21 @@ const DaoPage = () => {
                     <LoadingOutlined className="text-xl" />
                   ) : (
                     <>
-                      <DollarOutlined className="text-[28px]" />
+                      <DollarOutlined className="text-[24px]" />
                       <div className="flex gap-3 items-center">
-                        <p className="text-base text-primary-grey">
+                        <p className="text-sm text-primary-grey">
                           Staked token:
                         </p>
-                        <p className="text-base font-medium text-secondary-grey">
-                          {userStaked?.stakedToken + " ORAIX"}
+                        <p className="text-sm font-medium text-secondary-grey">
+                          {presentDecimal(userStaked!.stakedToken) + " ORAIX"}
                         </p>
                       </div>
                       <div className="flex gap-3 items-center mt-1">
-                        <p className="text-base text-primary-grey">
+                        <p className="text-sm text-primary-grey">
                           Reward token:
                         </p>
-                        <p className="text-base font-medium text-secondary-grey">
-                          {userStaked?.rewardToken + " ORAIX"}
+                        <p className="text-sm font-medium text-secondary-grey">
+                          {presentDecimal(userStaked!.rewardToken) + " ORAIX"}
                         </p>
                       </div>
                     </>
@@ -207,18 +208,19 @@ const DaoPage = () => {
             </div>
 
             <div className="py-6 flex items-center justify-between border-b border-primary-grey-bg">
-              <h1 className="text-[18px] text-secondary-grey font-semibold">
+              <h1 className="text-[17px] text-secondary-grey font-semibold">
                 Manage your token
               </h1>
               <StakingModal
                 token_addr={daoContractInfo.tokenAddr}
                 staking_addr={daoContractInfo.stakingAddr}
+                reloadBalance={reloadBalance}
                 setReloadBalance={setReloadBalance}
               />
             </div>
 
             <div className="py-6 flex items-center justify-between border-b border-primary-grey-bg">
-              <h1 className="text-[18px] text-secondary-grey font-semibold">
+              <h1 className="text-[17px] text-secondary-grey font-semibold">
                 Create a proposal
               </h1>
               <Button
@@ -234,8 +236,8 @@ const DaoPage = () => {
                 Proposals
               </h1>
               <div className="flex flex-col gap-5 w-full">
-                <h1 className="text-[16px] text-third-grey ml-4 font-semibold">
-                  History {daoContractInfo.totalProposal} prposals
+                <h1 className="text-[15px] text-third-grey ml-4 font-semibold">
+                  History {daoContractInfo.totalProposal} proposals
                 </h1>
                 <div className="w-full flex flex-col gap-2">
                   {daoContractInfo.listProposal.proposals.map((proposal) => (

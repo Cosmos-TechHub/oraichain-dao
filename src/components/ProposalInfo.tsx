@@ -32,58 +32,58 @@ const ProposalInfo = ({ proposal, daoName }: IProposalInfo) => {
       {proposal ? (
         <>
           <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-third-grey">
+            <div className="flex items-center gap-4 text-base text-third-grey">
               <Image src={OraiDex} alt="dao icon" width={25} height={25} />
               <h1>DAO</h1>
             </div>
-            <p className="text-[20px] font-semibold text-secondary-grey">
+            <p className="text-[17px] font-semibold text-secondary-grey">
               {daoName}
             </p>
           </div>
           <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-third-grey">
+            <div className="flex items-center gap-4 text-base text-third-grey">
               <UserOutlined className="text-[22px]" />
               <h1>Creator</h1>
             </div>
             <p
-              className="text-[20px] font-semibold text-secondary-grey"
+              className="text-[17px] font-semibold text-secondary-grey"
               title={proposal.proposer}
             >
               {truncate(proposal.proposer, 5, 39)}
             </p>
           </div>
           <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-third-grey">
+            <div className="flex items-center gap-4 text-base text-third-grey">
               <ReloadOutlined className="text-[22px]" />
               <h1>Status</h1>
             </div>
-            <p className="text-[20px] font-semibold text-secondary-grey">
+            <p className="text-[17px] font-semibold text-secondary-grey">
               {proposal.status}
             </p>
           </div>
 
           {/* <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-third-grey">
+            <div className="flex items-center gap-4 text-base text-third-grey">
               <DollarOutlined className="text-[22px]" />
               <h1>Deposited</h1>
             </div>
-            <p className="text-[20px] font-semibold text-secondary-grey">
+            <p className="text-[17px] font-semibold text-secondary-grey">
               1,600 $OSMO
             </p>
           </div> */}
           <div className="grid grid-cols-2 items-center">
-            <div className="flex items-center gap-4 text-[18px] text-third-grey">
+            <div className="flex items-center gap-4 text-base text-third-grey">
               <FieldTimeOutlined className="text-[22px]" />
               <h1>Time left</h1>
             </div>
-            <p className="text-[20px] font-semibold text-secondary-grey">
+            <p className="text-[17px] font-semibold text-secondary-grey">
               {dayLeft} day
             </p>
           </div>
         </>
       ) : (
         <div className="flex justify-center">
-          <LoadingOutlined className="text-[46px] " />
+          <LoadingOutlined className="text-[34px] " />
         </div>
       )}
     </div>
