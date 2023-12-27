@@ -158,7 +158,7 @@ const DaoPage = () => {
                 alt="dao img"
                 className="w-[112px] h-[112px]"
               />
-              <h1 className="mt-4 text-[26px] font-semibold">
+              <h1 className="mt-4 text-[25px] font-semibold">
                 {daoContractInfo.name}
               </h1>
               {/* <p className="text-[18px] text-primary-grey font-semibold">
@@ -232,7 +232,7 @@ const DaoPage = () => {
             </div>
 
             <div className="py-6 flex flex-col items-start justify-between gap-8">
-              <h1 className="text-[20px] text-secondary-grey font-semibold">
+              <h1 className="text-[17px] text-secondary-grey font-semibold">
                 Proposals
               </h1>
               <div className="flex flex-col gap-5 w-full">

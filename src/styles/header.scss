@@ -1,13 +1,14 @@
 #header {
-  @apply h-20 pl-16 pr-48 flex items-center justify-between bg-white fixed top-0 right-0 left-[280px] z-[1];
+  @apply h-20 pl-16 pr-48 flex items-center justify-between bg-white fixed top-0 right-0 left-[240px] z-[1];
   transition: all 0.2s;
   border-bottom: 1px solid rgba(5, 5, 5, 0.06);
   border-top: 1px solid rgba(5, 5, 5, 0.06);
 
   .ant-btn {
-    font-size: 16px;
-    height: auto;
-    padding: 6px 16px;
-    border-radius: 6px;
+    @apply text-base text-black h-auto py-[6px] px-[16px] rounded-md bg-primary-grey-bg;
+  }
+
+  .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+    @apply text-secondary-grey border-primary-grey-bg opacity-90;
   }
 }

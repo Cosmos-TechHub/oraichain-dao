@@ -1,6 +1,6 @@
 #layout {
   #content {
-    @apply mt-20 ml-[280px] py-10 px-16 bg-white;
+    @apply mt-20 ml-[240px] py-10 px-16 bg-white;
     transition: all 0.2s;
   }
 
@@ -20,9 +20,9 @@
   }
 
   aside {
-    width: 280px !important;
-    min-width: 280px !important;
-    max-width: 280px !important;
+    width: 240px !important;
+    min-width: 240px !important;
+    max-width: 240px !important;
   }
   aside.ant-layout-sider-collapsed {
     width: 80px !important;
@@ -39,7 +39,7 @@
   }
 
   div.ant-layout-sider-trigger {
-    width: 280px !important;
+    width: 240px !important;
     border-right: 1px solid rgba(5, 5, 5, 0.06);
   }
 
@@ -64,7 +64,7 @@
   }
 
   .ant-menu .ant-menu-item .anticon + span {
-    margin-inline-start: 68px;
+    margin-inline-start: 52px;
   }
 
   .ant-menu-title-content {
@@ -78,10 +78,10 @@
   }
 
   .ant-menu-item:first-child {
-    @apply h-[79px] leading-[5rem] m-0 w-full rounded-none border-b mb-2 leading-[91px]; 
+    @apply h-[79px] m-0 w-full rounded-none border-b leading-[91px]; 
 
     .ant-menu-title-content {
-      @apply ml-8 text-black text-[20px] font-bold;
+      @apply text-black text-[19px] font-bold;
     }
   }
 

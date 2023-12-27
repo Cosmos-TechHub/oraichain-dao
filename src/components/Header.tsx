@@ -124,7 +124,7 @@ const Header = () => {
 
   return (
     <div id="header">
-      <h1 className="text-[22px] font-semibold">{headerTitle}</h1>
+      <h1 className="text-xl font-semibold">{headerTitle}</h1>
       <div>
         <ConnectButton walletStatus={status} />
       </div>

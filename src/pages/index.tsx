@@ -134,7 +134,7 @@ export default function Home() {
 
   return (
     <div id="home" className="flex flex-col">
-      <h1 className="text-[19px] font-semibold mb-8">Featured DAOs</h1>
+      <h1 className="text-lg font-semibold mb-8">Featured DAOs</h1>
       <div className="w-full flex gap-4">
         {dao.data.map((daoInfo) => (
           <DaoCard daoInfo={daoInfo} key={daoInfo.dao_addr} />
