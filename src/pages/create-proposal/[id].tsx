@@ -39,9 +39,10 @@ const CreateProposal = () => {
         router.push({ pathname: "/dao/[id]", query: { id: daoAddr } });
       } catch (err: any) {
         console.log(err);
+        const message = err.message
         setLoadingMakeProposal(false);
 
-        toast.error("Make proposal error!", {
+        toast.error(message, {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
