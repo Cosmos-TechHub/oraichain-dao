@@ -1,7 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Modal, Button, Tabs } from "antd";
 import type { TabsProps } from "antd";
-import { PlusOutlined, MinusOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import {
+	PlusOutlined,
+	MinusOutlined,
+	ArrowRightOutlined,
+} from "@ant-design/icons";
 import { useChain } from "@cosmos-kit/react";
 import { toBinary } from "@cosmjs/cosmwasm-stargate";
 import { toast } from "react-toastify";
@@ -21,14 +25,14 @@ import { presentDecimal } from "@/utils/decimalToken";
 export interface IStakingModal {
 	token_addr: string;
 	staking_addr: string;
-  reloadBalance: boolean;
+	reloadBalance: boolean;
 	setReloadBalance: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const StakingModal = ({
 	token_addr,
 	staking_addr,
-  reloadBalance,
+	reloadBalance,
 	setReloadBalance,
 }: IStakingModal) => {
 	const { getCosmWasmClient, getSigningCosmWasmClient, address } = useChain(
@@ -37,7 +41,7 @@ const StakingModal = ({
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<string>("1");
-	const [token, setToken] = useState<number>(0);
+	const [token, setToken] = useState<string>("0");
 	const [balance, setBalance] = useState<string>("");
 	const [stakedBalance, setStakedBalance] = useState<string>("");
 	const [unstakePeriod, setUnstakedPeriod] = useState<Duration | null>(null);
@@ -45,21 +49,30 @@ const StakingModal = ({
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		if (event.target.value === "") {
-			setToken(0);
+			setToken("0");
 		} else {
-			setToken(parseInt(event.target.value));
+			setToken(event.target.value);
 		}
 	};
+
+	console.log(parseFloat(token) * 1000000 < 0.000001);
+	console.log(1.001 - 1.0);
 
 	const Content = () => {
 		return (
 			<div className="flex flex-col mt-3 gap-6">
 				<h1 className="text-[19px] font-semibold">Choose token amount</h1>
-				<div className="grid grid-cols-3">
-					<div className="w-full flex items-center justify-center gap-6 text-primary-grey col-span-1">
+				<div className="grid grid-cols-2">
+					<div className="w-full flex items-center justify-center gap-6 text-primary-grey">
 						<button
 							className="text-lg p-2"
-							onClick={() => setToken((prev) => prev + 1)}
+							onClick={() =>
+								setToken((prev) =>
+									parseFloat((parseFloat(prev) + 1).toString())
+										.toFixed(6)
+										.toString()
+								)
+							}
 						>
 							<PlusOutlined />
 						</button>
@@ -67,10 +80,12 @@ const StakingModal = ({
 							className="text-lg p-2"
 							onClick={() =>
 								setToken((prev) => {
-									if (prev - 1 < 0) {
+									if (parseFloat(prev) - 1 < 0.000001) {
 										return prev;
 									} else {
-										return prev - 1;
+										return parseFloat((parseFloat(prev) - 1).toString())
+											.toFixed(6)
+											.toString();
 									}
 								})
 							}
@@ -78,7 +93,7 @@ const StakingModal = ({
 							<MinusOutlined />
 						</button>
 					</div>
-					<div className="grid grid-cols-4 gap-2 items-center text-lg px-2 col-span-2">
+					<div className="grid grid-cols-2 gap-2 items-center text-lg px-2">
 						<input
 							type="text"
 							name="token"
@@ -86,8 +101,7 @@ const StakingModal = ({
 							onBlur={handleChange}
 							className="outline-none text-right text-base col-span-1"
 						/>
-            <div className="flex justify-center col-span-1"><ArrowRightOutlined /></div>
-						<p className="text-primary-grey text-base col-span-2">{presentDecimal(token.toString())} $ORAIX</p>
+						<p className="text-primary-grey text-base">$ORAIX</p>
 					</div>
 				</div>
 				<h1 className="text-base text-primary-grey pb-6 border-b border-secondary-grey-bg">
@@ -131,33 +145,62 @@ const StakingModal = ({
 	};
 
 	const handleOk = async () => {
+		const tokenToHandle = parseFloat(token) * 1000000;
+
 		setLoading(true);
 		try {
 			if (address) {
 				const client = await getSigningCosmWasmClient();
 
-				if (activeTab === "1") {
-					const tokenClient = new Cw20BaseClient(client, address, token_addr);
-					await tokenClient.send({
-						amount: token.toString(),
-						contract: staking_addr,
-						msg: toBinary({
-							stake: {},
-						}),
-					});
-					toast.success("Stake token success !", {
-						position: toast.POSITION.TOP_RIGHT,
-					});
-				} else {
-					const stakingClient = new Cw20StakeClient(
-						client,
-						address,
-						staking_addr
-					);
-					await stakingClient.unstake({ amount: token.toString() });
-					toast.success("Unstake token success !", {
-						position: toast.POSITION.TOP_RIGHT,
-					});
+				switch (activeTab) {
+					case "1":
+						if (
+							tokenToHandle > parseFloat(balance) ||
+							tokenToHandle <= 0.000001
+						) {
+							toast.error("Token is too small or bigger than balance!", {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+						} else {
+							const tokenClient = new Cw20BaseClient(
+								client,
+								address,
+								token_addr
+							);
+							await tokenClient.send({
+								amount: tokenToHandle.toString(),
+								contract: staking_addr,
+								msg: toBinary({
+									stake: {},
+								}),
+							});
+							toast.success("Stake token successful !", {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+						}
+						break;
+					case "2":
+						if (
+							tokenToHandle > parseFloat(stakedBalance) ||
+							tokenToHandle <= 0.000001
+						) {
+							toast.error("Token is too small or bigger than balance!", {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+						} else {
+							const stakingClient = new Cw20StakeClient(
+								client,
+								address,
+								staking_addr
+							);
+							await stakingClient.unstake({ amount: tokenToHandle.toString() });
+							toast.success("Unstake token successful !", {
+								position: toast.POSITION.TOP_RIGHT,
+							});
+						}
+						break;
+					default:
+						break;
 				}
 			}
 		} catch (err: any) {
@@ -167,9 +210,8 @@ const StakingModal = ({
 			});
 		}
 		setLoading(false);
-		setToken(0);
+		setToken("0");
 		setIsModalOpen(false);
-		// location.reload();
 		setReloadBalance((prev) => !prev);
 	};
 
@@ -185,14 +227,14 @@ const StakingModal = ({
 		const getInfo = async () => {
 			if (address) {
 				const client = await getCosmWasmClient();
-        const block = await client.getBlock();
+				const block = await client.getBlock();
 				const tokenClient = new Cw20BaseQueryClient(client, token_addr);
 				const stakingClient = new Cw20StakeQueryClient(client, staking_addr);
 
 				const tokenBalance = await tokenClient.balance({ address: address });
 				const stakedBalance = await stakingClient.stakedBalanceAtHeight({
 					address: address,
-          height: block.header.height + 1
+					height: block.header.height + 1,
 				});
 				const stakingConfig = await stakingClient.getConfig();
 
