@@ -21,6 +21,7 @@ import {
 } from "@/codegen/Cw20Stake.client";
 import { Duration } from "@/codegen/types";
 import { presentDecimal } from "@/utils/decimalToken";
+import ContentStakingModal from "./ContentStakingModal";
 
 export interface IStakingModal {
 	token_addr: string;
@@ -131,12 +132,34 @@ const StakingModal = ({
 		{
 			key: "1",
 			label: "Stake",
-			children: <Content />,
+			children: (
+				// <ContentStakingModal
+				// 	token={token}
+				// 	activeTab={activeTab}
+				// 	balance={balance}
+				// 	stakedBalance={stakedBalance}
+				// 	unstakePeriod={unstakePeriod}
+				// 	setToken={setToken}
+				// 	handleChange={handleChange}
+				// />
+        <Content />
+			),
 		},
 		{
 			key: "2",
 			label: "Unstake",
-			children: <Content />,
+			children: (
+				// <ContentStakingModal
+				// 	token={token}
+				// 	activeTab={activeTab}
+				// 	balance={balance}
+				// 	stakedBalance={stakedBalance}
+				// 	unstakePeriod={unstakePeriod}
+				// 	setToken={setToken}
+				// 	handleChange={handleChange}
+				// />
+        <Content />
+			),
 		},
 	];
 

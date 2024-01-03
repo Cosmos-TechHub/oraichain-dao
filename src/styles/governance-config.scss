@@ -1,0 +1,43 @@
+#governance-config {
+	@apply w-full py-6 flex flex-col gap-10;
+
+    .ant-tabs .ant-tabs-tab {
+        @apply py-[6px];
+    }
+
+	.ant-tabs .ant-tabs-tab + .ant-tabs-tab {
+		@apply m-0;
+	}
+
+	.ant-tabs > .ant-tabs-nav {
+		@apply pb-6;
+	}
+
+	.ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar {
+		@apply h-full rounded-lg;
+	}
+
+	.ant-tabs .ant-tabs-ink-bar {
+		@apply bg-primary-grey-bg z-[-1];
+	}
+
+	.ant-tabs-top > .ant-tabs-nav::before {
+		@apply border-none;
+	}
+
+	.ant-tabs .ant-tabs-tab {
+		@apply text-base w-full flex justify-center bg-secondary-grey-bg rounded-lg;
+	}
+
+	.ant-tabs .ant-tabs-tab:hover {
+		@apply text-black opacity-90;
+	}
+
+	.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+		@apply text-black;
+	}
+
+	.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list {
+		@apply w-[50%] grid grid-cols-2;
+	}
+}
