@@ -20,7 +20,9 @@ const config: Config = {
         'secondary-grey': 'rgba( 36,38,40 ,0.95)',
         'third-grey': 'rgba( 36,38,40 ,0.7)',
         'primary-purple': 'rgba( 123,97,255 ,0.95)',
-        'primary-purple-bg': 'rgba( 123,97,255 ,0.25)'
+        'primary-purple-bg': 'rgba( 123,97,255 ,0.25)',
+        'primary-yellow': 'rgba( 255,217,102 ,0.05)',
+        'secondary-yellow': 'rgba( 255,217,102 ,0.95)'
       }
     },
   },

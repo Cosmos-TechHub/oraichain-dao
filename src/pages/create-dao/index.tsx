@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import PickDaoType from '@/components/PickDaoType';
 import GovernanceConfig from '@/components/GovernanceConfig';
+import VotingConfig from '@/components/VotingConfig';
 
 const CreateDao = () => {
   const [pagination, setPagination] = useState<number>(1);
@@ -15,7 +16,7 @@ const CreateDao = () => {
       case 2: 
         return <GovernanceConfig setPagination={setPagination}/>
       case 3:
-        return <div>page 3</div>
+        return <VotingConfig setPagination={setPagination} />
       default:
         return <PickDaoType setPagination={setPagination} />
     }
@@ -23,7 +24,7 @@ const CreateDao = () => {
 
   return (
     <div id='create-dao' className='flex justify-center items-center'>
-      <CreateDaoPage pagination={2} />
+      <CreateDaoPage pagination={pagination} />
       {/* <h1 className='text-xl text-third-grey'>Upcoming feature ...</h1> */}
     </div>
   )

@@ -1,0 +1,31 @@
+#voting-choice {
+    @apply w-full flex flex-col bg-secondary-grey-bg gap-4 rounded-xl pb-5;
+
+    .ant-select-single {
+        @apply h-auto;
+    }
+
+    .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        @apply bg-transparent border border-primary-grey-bg;
+    }
+
+    .ant-switch {
+        @apply bg-primary-grey-bg h-[14px] min-w-[36px];
+    }
+
+    .ant-switch .ant-switch-handle {
+        @apply w-4 h-4 top-[-1px];
+        inset-inline-start: 0px;
+    }
+
+    .ant-switch.ant-switch-checked .ant-switch-handle {
+        inset-inline-start: calc(100% - 15px);
+    }
+
+    .ant-switch.ant-switch-checked {
+        @apply bg-primary-purple;
+    }
+    // .ant-switch:hover:not(.ant-switch-disabled) {
+    //     @apply bg-primary-grey-bg;
+    // }
+}

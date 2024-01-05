@@ -1,11 +1,10 @@
-import Image from "next/image";
 import React from "react";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import { UserOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 
-import OraiDex from "@/assets/image/oraidex.webp";
-
+import DaoBasicInfo from "./DaoBasicInfo";
+ 
 interface IGovernanceConfig {
 	setPagination: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -144,14 +143,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 
 	return (
 		<div id="governance-config">
-			<div className="h-full flex flex-col justify-center items-center px-10 py-6 border-b border-secondary-grey-bg">
-				<Image src={OraiDex} alt="dao img" className="w-[112px] h-[112px]" />
-				<h1 className="mt-4 text-[25px] font-semibold">OraiX Governance</h1>
-				{/* <p className="text-[18px] text-primary-grey font-semibold">
-                Est. September 8
-              </p> */}
-				<p className="text-base mt-4 text-[#374151]">Dao that manage Dao</p>
-			</div>
+			<DaoBasicInfo />
 
 			<div className="w-full py-4 flex flex-col gap-6">
 				<h1 className="text-[17px] font-medium">Governance configuration</h1>
@@ -160,7 +152,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 
 			<div className="flex justify-between items-center pt-10">
 				<button
-					className="px-4 py-[6px] bg-secondary-grey text-white rounded-md flex items-center gap-2"
+					className="px-4 py-[6px] bg-primary-grey-bg text-black rounded-md flex items-center gap-2 hover:opacity-90"
 					onClick={() => setPagination((prevPagination) => prevPagination - 1)}
 				>
 					<ArrowLeftOutlined />

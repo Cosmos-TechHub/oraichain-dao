@@ -1,0 +1,27 @@
+#voting-config {
+	@apply w-full flex flex-col gap-10;
+
+	.ant-checkbox .ant-checkbox-inner {
+		@apply w-6 h-6 bg-secondary-grey;
+	}
+
+	.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
+		.ant-checkbox-inner,
+	.ant-checkbox-checked .ant-checkbox-inner {
+		@apply border-secondary-grey;
+	}
+
+    .ant-checkbox-checked .ant-checkbox-inner {
+        @apply bg-primary-purple border-none;
+    }
+
+	.ant-checkbox .ant-checkbox-inner:after {
+		@apply w-[6px] h-[12px];
+	}
+
+	.ant-checkbox-checked .ant-checkbox-inner:after {
+		transform: translate(-50%, -50%) rotate(45deg);
+		left: 50%;
+		top: 42%;
+	}
+}
