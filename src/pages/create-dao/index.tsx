@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import PickDaoType from '@/components/PickDaoType';
 import GovernanceConfig from '@/components/GovernanceConfig';
 import VotingConfig from '@/components/VotingConfig';
+import CreateDaoReview from '@/components/CreateDaoReview';
 
 const CreateDao = () => {
   const [pagination, setPagination] = useState<number>(1);
@@ -17,6 +18,8 @@ const CreateDao = () => {
         return <GovernanceConfig setPagination={setPagination}/>
       case 3:
         return <VotingConfig setPagination={setPagination} />
+      case 4:
+          return <CreateDaoReview setPagination={setPagination} /> 
       default:
         return <PickDaoType setPagination={setPagination} />
     }

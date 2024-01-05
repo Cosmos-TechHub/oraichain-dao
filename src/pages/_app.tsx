@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import store, { persistor } from "@/config/redux";
 import "@/styles/globals.scss";
+import 'charts.css';
 // Import this in your top-level route/layout
 import "@interchain-ui/react/styles";
 import { network } from "@/config";
