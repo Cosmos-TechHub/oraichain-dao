@@ -1,15 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import { UserOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { useChain } from "@cosmos-kit/react";
+import { toast } from "react-toastify";
 
 import DaoBasicInfo from "./DaoBasicInfo";
- 
+import { getNewToken, setNewToken } from "@/utils/localStorageCreateDao";
+import { network } from "@/config";
+import { truncate } from "@/utils/truncate";
+
 interface IGovernanceConfig {
 	setPagination: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
+	const newToken = getNewToken();
+
+	const { address } = useChain(network.chainName);
+
+	const [keyTab, setKeyTab] = useState<number>(1);
+	const [initialToken, setInitialToken] = useState<{
+		symbol: string;
+		name: string;
+		token: string;
+	}>(() => {
+		if (newToken) {
+			const newInfo = {
+				symbol: newToken.symbol ? newToken.symbol : "",
+				name: newToken.name ? newToken.name : "",
+				token: newToken.initial_balances[0].amount
+					? newToken.initial_balances[0].amount
+					: "1000000",
+			};
+      return newInfo
+		}
+
+		return {
+			symbol: "",
+			name: "",
+			token: "1000000",
+		};
+	});
+
 	const CreateToken = () => {
 		return (
 			<div className="w-full flex flex-col gap-10">
@@ -23,6 +56,12 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 								<input
 									type="text"
 									name="symbol"
+									defaultValue={initialToken.symbol}
+									onBlur={(e) => {
+										setInitialToken((old) => {
+											return { ...old, symbol: e.target.value };
+										});
+									}}
 									placeholder="An aplphanumeric symbol (e.g. DDT)"
 									className="flex-1 px-4 py-[6px] rounded-lg outline-none bg-transparent border border-primary-grey-bg"
 								/>
@@ -35,6 +74,12 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 								<input
 									type="text"
 									name="symbol"
+									defaultValue={initialToken.name}
+									onBlur={(e) => {
+										setInitialToken((old) => {
+											return { ...old, name: e.target.value };
+										});
+									}}
 									placeholder='Longer name of your token (e.g. "Dog Dao token")'
 									className="flex-1 px-4 py-[6px] rounded-lg outline-none bg-transparent border border-primary-grey-bg"
 								/>
@@ -48,13 +93,19 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 							<input
 								type="text"
 								name="token"
+								defaultValue={initialToken.token}
+								onBlur={(e) => {
+									setInitialToken((old) => {
+										return { ...old, token: e.target.value };
+									});
+								}}
 								className="outline-none pl-4 py-[6px] text-right text-third-grey font-medium text-base bg-transparent"
 							/>
 							<p className="text-third-grey font-medium text-base">$TOKEN</p>
 						</div>
 					</div>
 
-					<div className="flex flex-col pb-4 gap-5">
+					{/* <div className="flex flex-col pb-4 gap-5">
 						<div className="flex items-center justify-between">
 							<h1 className="text-base font-medium">Treasury percent</h1>
 							<div className="flex items-center gap-2">
@@ -72,7 +123,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 							the DAO's treasury, where they can be distributed later via
 							governance proposals.
 						</p>
-					</div>
+					</div> */}
 				</div>
 
 				<div className="flex flex-col gap-6">
@@ -84,16 +135,16 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 							<div className="col-span-2 flex items-center gap-2">
 								<UserOutlined className="text-xl" />
 								<p className="text-base text-third-grey font-medium">
-									orai123...456
+									{address ? truncate(address, 6, 38) : ""}
 								</p>
 							</div>
-							<div className="col-span-5 bg-red-300 h-full w-[50%]"></div>
+							<div className="col-span-5 bg-red-300 h-full w-[100%]"></div>
 							<p className="text-lg font-medium text-third-grey col-span-1">
-								10%
+								100%
 							</p>
 						</div>
 
-						<div className="grid grid-cols-8 items-center gap-6 justify-around px-6">
+						{/* <div className="grid grid-cols-8 items-center gap-6 justify-around px-6">
 							<h1 className="col-span-2 text-[17px] font-medium text-third-grey">
 								Dao treasury
 							</h1>
@@ -101,7 +152,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 							<p className="col-span-1 text-lg font-medium text-third-grey">
 								10%
 							</p>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>
@@ -126,6 +177,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 
 	const onChange = (key: string) => {
 		console.log(key);
+		setKeyTab(parseInt(key));
 	};
 
 	const items: TabsProps["items"] = [
@@ -141,13 +193,54 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 		},
 	];
 
+	const handleContinue = () => {
+		switch (keyTab) {
+			case 1:
+				if (
+					initialToken.name === "" ||
+					initialToken.symbol === "" ||
+					initialToken.token === ""
+				) {
+					toast.error("Missing name or symbol or token!", {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+					break;
+				}
+
+				if (newToken && address) {
+					const newInfo = {
+						...newToken,
+						symbol: initialToken.symbol,
+						name: initialToken.name,
+						initial_balances: [
+							{ address: address, amount: initialToken.token },
+						],
+					} as any;
+          console.log(newInfo);
+          
+					setNewToken(newInfo);
+				}
+				break;
+			case 2:
+				break;
+			default:
+				break;
+		}
+
+		// setPagination((prevPagination) => prevPagination + 1)
+	};
+
 	return (
 		<div id="governance-config">
 			<DaoBasicInfo />
 
 			<div className="w-full py-4 flex flex-col gap-6">
 				<h1 className="text-[17px] font-medium">Governance configuration</h1>
-				<Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+				<Tabs
+					defaultActiveKey={keyTab.toString()}
+					items={items}
+					onChange={onChange}
+				/>
 			</div>
 
 			<div className="flex justify-between items-center pt-10">
@@ -160,7 +253,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 				</button>
 				<button
 					className="px-6 py-[6px] bg-secondary-grey text-white rounded-md"
-					onClick={() => setPagination((prevPagination) => prevPagination + 1)}
+					onClick={handleContinue}
 				>
 					Continue
 				</button>

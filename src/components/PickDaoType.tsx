@@ -4,8 +4,13 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 
+import {
+	getCreateDaoInfo,
+	setCreateDaoInfo,
+} from "@/utils/localStorageCreateDao";
+
 interface IPickDaoType {
-  setPagination: React.Dispatch<React.SetStateAction<number>>
+	setPagination: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
@@ -32,17 +37,30 @@ type FieldType = {
 	daoType?: string;
 };
 
-const PickDaoType = ({ setPagination}: IPickDaoType) => {
+const PickDaoType = ({ setPagination }: IPickDaoType) => {
+	const daoInfo = getCreateDaoInfo();
+
 	const [loading, setLoading] = useState(false);
-	const [imageUrl, setImageUrl] = useState<string>();
+	const [imageUrl, setImageUrl] = useState<string | null>(() => {
+		if (daoInfo && daoInfo.image_url) {
+			return daoInfo.image_url;
+		}
+		return null;
+	});
 
 	const [form] = Form.useForm();
 	const onFinish = (values: any) => {
 		console.log("Success:", values);
-    setPagination(prevPagination => prevPagination + 1)
+		console.log("image: ", imageUrl);
+		const newInfo = {
+			name: values.daoName,
+			description: values.description,
+			image_url: imageUrl
+		} as any
+		let newDaoInfo = daoInfo ? {...daoInfo, ...newInfo} : daoInfo;
+		setCreateDaoInfo(newDaoInfo);
+		setPagination((prevPagination) => prevPagination + 1);
 	};
-	const onFinishFailed = () => {};
-	const onReset = () => {};
 
 	const handleChange: UploadProps["onChange"] = (
 		info: UploadChangeParam<UploadFile>
@@ -102,10 +120,8 @@ const PickDaoType = ({ setPagination}: IPickDaoType) => {
 				style={{ maxWidth: "100%" }}
 				initialValues={{ remember: true }}
 				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
 				autoComplete="off"
 				form={form}
-				onReset={onReset}
 			>
 				<div className="bg-secondary-grey-bg px-6 py-8">
 					<Form.Item<FieldType>
@@ -114,6 +130,7 @@ const PickDaoType = ({ setPagination}: IPickDaoType) => {
 						rules={[{ required: true }]}
 						labelCol={{ span: 3 }}
 						wrapperCol={{ span: 21 }}
+						initialValue={daoInfo && daoInfo.name ? daoInfo.name : ""}
 					>
 						<Input placeholder="Give your DAO a name" />
 					</Form.Item>
@@ -126,6 +143,7 @@ const PickDaoType = ({ setPagination}: IPickDaoType) => {
 						labelCol={{ span: 24 }}
 						wrapperCol={{ span: 24 }}
 						rules={[{ required: true }]}
+						initialValue={daoInfo && daoInfo.description ? daoInfo.description : ""}
 					>
 						<Input.TextArea
 							placeholder="Give your DAO a description..."
@@ -135,7 +153,7 @@ const PickDaoType = ({ setPagination}: IPickDaoType) => {
 				</div>
 
 				<div className="flex justify-end items-center mt-2 py-6 border-t border-b border-secondary-grey-bg rounded-none">
-					<Form.Item wrapperCol={{  span: 24 }}>
+					<Form.Item wrapperCol={{ span: 24 }}>
 						<Button type="primary" htmlType="submit">
 							Continue
 						</Button>
