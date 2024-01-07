@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
-import { UserOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import {
+	UserOutlined,
+	ArrowLeftOutlined,
+	LoadingOutlined,
+} from "@ant-design/icons";
 import { useChain } from "@cosmos-kit/react";
 import { toast } from "react-toastify";
 
 import DaoBasicInfo from "./DaoBasicInfo";
-import { getNewToken, setNewToken } from "@/utils/localStorageCreateDao";
+import {
+	getExistToken,
+	getNewToken,
+	setExistToken,
+	setNewToken,
+} from "@/utils/localStorageCreateDao";
 import { network } from "@/config";
 import { truncate } from "@/utils/truncate";
 
@@ -16,8 +25,9 @@ interface IGovernanceConfig {
 
 const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 	const newToken = getNewToken();
+	const existToken = getExistToken();
 
-	const { address } = useChain(network.chainName);
+	const { address, getCosmWasmClient } = useChain(network.chainName);
 
 	const [keyTab, setKeyTab] = useState<number>(1);
 	const [initialToken, setInitialToken] = useState<{
@@ -33,7 +43,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 					? newToken.initial_balances[0].amount
 					: "1000000",
 			};
-      return newInfo
+			return newInfo;
 		}
 
 		return {
@@ -41,6 +51,13 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 			name: "",
 			token: "1000000",
 		};
+	});
+	const [existAddress, setExistAddress] = useState<string>(() => {
+		if (existToken) {
+			return existToken.address;
+		} else {
+			return "";
+		}
 	});
 
 	const CreateToken = () => {
@@ -168,6 +185,8 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 				<input
 					type="text"
 					name="token-address"
+					defaultValue={existAddress}
+					onBlur={(e) => setExistAddress(e.target.value)}
 					placeholder="Your token address (e.g. orai1u4l...3qxm3)"
 					className="px-4 py-[10px] rounded-lg outline-none bg-transparent border border-primary-grey-bg"
 				/>
@@ -193,7 +212,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 		},
 	];
 
-	const handleContinue = () => {
+	const handleContinue = async () => {
 		switch (keyTab) {
 			case 1:
 				if (
@@ -216,18 +235,30 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 							{ address: address, amount: initialToken.token },
 						],
 					} as any;
-          console.log(newInfo);
-          
+					console.log(newInfo);
+
 					setNewToken(newInfo);
 				}
 				break;
 			case 2:
+				if (existAddress === "") {
+					toast.error("Missing address of token!", {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+					break;
+				}
+
+				const newInfo = {
+					...existToken,
+					address: existAddress,
+				} as any;
+				setExistToken(newInfo);
 				break;
 			default:
 				break;
 		}
 
-		// setPagination((prevPagination) => prevPagination + 1)
+		setPagination((prevPagination) => prevPagination + 1);
 	};
 
 	return (
@@ -252,7 +283,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 					<p>Go back</p>
 				</button>
 				<button
-					className="px-6 py-[6px] bg-secondary-grey text-white rounded-md"
+					className="flex items-center justify-between px-6 py-[6px] bg-secondary-grey text-white rounded-md"
 					onClick={handleContinue}
 				>
 					Continue

@@ -1,5 +1,6 @@
 import { InstantiateMsg as DaoInitMsg } from "@/codegen/DaoDaoCore.types";
 import { InstantiateMsg as VotingInitMsg } from "@/codegen/DaoVotingCw20Staked.types";
+import {InstantiateMsg as ProposalInitMsg} from '@/codegen/DaoProposalSingle.types'
 import {
 	StakingInfo,
 	Cw20Coin,
@@ -12,7 +13,6 @@ type ExistToken = {
 	address: string;
 	staking_contract: StakingInfo;
 };
-
 type NewToken = {
 	code_id: number;
 	decimals: number;
@@ -25,11 +25,38 @@ type NewToken = {
 	symbol: string;
 	unstaking_duration?: Duration | null;
 };
+type VotingConfig = {
+	unstake_period: {
+		type: string,
+		value: number
+	},
+	voting_duration: {
+		type: string,
+		value: number
+	},
+	active_threadhole: {
+		disabled: boolean,
+		type: string,
+		value: number
+	},
+	passing_threadhole: {
+		majority: boolean,
+		type: string,
+		value: number
+	},
+	quorum: {
+		majority: boolean,
+		type: string,
+		value: number
+	}
+}
 
 type getCreateDaoInfo = () => DaoInitMsg | null;
 type getVotingCreateInfo = () => VotingInitMsg | null;
+type getProposalCreateInfo = () => ProposalInitMsg | null;
 type getExistToken = () => ExistToken | null;
 type getNewToken = () => NewToken | null;
+type getVotingConfig = () => VotingConfig | null;
 
 export const getCreateDaoInfo: getCreateDaoInfo = () => {
 	const daoInfo = localStorage.getItem("createDaoInfo");
@@ -86,3 +113,30 @@ export const getNewToken: getNewToken = () => {
 export const setNewToken = (newToken: NewToken) => {
 	localStorage.setItem("newToken", JSON.stringify(newToken));
 };
+
+export const getProposalCreateInfo: getProposalCreateInfo = () => {
+	const proposalInfo = localStorage.getItem("createProposalInfo");
+
+	if (proposalInfo === "undefined" || proposalInfo === null) {
+		return null;
+	} else {
+		return JSON.parse(proposalInfo);
+	}
+};
+
+export const setProposalCreateInfo = (proposalInfo: ProposalInitMsg) => {
+	localStorage.setItem("createProposalInfo", JSON.stringify(proposalInfo));
+};
+
+export const getVotingConfig: getVotingConfig = () => {
+	const votingConfig = localStorage.getItem("votingConfig");
+	if(votingConfig === "undefined" || votingConfig === null) {
+		return null;
+	} else {
+		return JSON.parse(votingConfig)
+	}
+}
+
+export const setVotingConfig = (votingConfig: VotingConfig) => {
+	localStorage.setItem("votingConfig", JSON.stringify(votingConfig));
+}

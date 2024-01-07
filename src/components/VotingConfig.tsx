@@ -4,14 +4,15 @@ import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { WarningFilled, ArrowLeftOutlined } from "@ant-design/icons";
 
 import DaoBasicInfo from "./DaoBasicInfo";
-import VotingChoice from "./VotingChoice";
+import VotingAdvanceChoice from "./VotingAdvanceChoice";
+import VotingBasicChoice from "./VotingBasicChoice";
 import { votingChoiceConfig, votingChoiceAdvanceConfig } from "@/config";
 
 interface IVotingConfig {
 	setPagination: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const VotingConfig = ({setPagination}: IVotingConfig) => {
+const VotingConfig = ({ setPagination }: IVotingConfig) => {
 	const [showAdvanceConfig, setShowAdvanceConfig] = useState<boolean>(false);
 
 	const onChange = (e: CheckboxChangeEvent) => {
@@ -27,7 +28,7 @@ const VotingConfig = ({setPagination}: IVotingConfig) => {
 				</h1>
 				<div className="grid grid-cols-3 gap-10">
 					{votingChoiceConfig.map((choiceConfig, index) => (
-						<VotingChoice
+						<VotingBasicChoice
 							key={index}
 							name={choiceConfig.name}
 							description={choiceConfig.description}
@@ -66,14 +67,13 @@ const VotingConfig = ({setPagination}: IVotingConfig) => {
 
 						<div className="grid grid-cols-3 gap-10">
 							{votingChoiceAdvanceConfig.map((choiceConfig, index) => (
-								<VotingChoice
+								<VotingAdvanceChoice
 									key={index}
 									name={choiceConfig.name}
 									description={choiceConfig.description}
 									icon={choiceConfig.icon}
 									options={choiceConfig.options}
 									defaultOption={choiceConfig.defaultOption}
-									disabled={choiceConfig.disabled}
 								/>
 							))}
 						</div>
@@ -81,7 +81,7 @@ const VotingConfig = ({setPagination}: IVotingConfig) => {
 				)}
 			</div>
 
-            <div className="flex justify-between items-center pt-10">
+			<div className="flex justify-between items-center pt-10">
 				<button
 					className="px-4 py-[6px] bg-primary-grey-bg text-black rounded-md flex items-center gap-2 hover:opacity-90"
 					onClick={() => setPagination((prevPagination) => prevPagination - 1)}

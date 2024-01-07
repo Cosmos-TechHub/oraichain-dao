@@ -39,7 +39,6 @@ export const votingChoiceAdvanceConfig = [
 		description:
 			"The amount of voting power that needs to be staked in order for the DAO to become active (i.e. proposal creation is allowed).",
         icon: "🎬",
-        disabled: true,
         options: [
             { value: "count", label: "Count" },
             { value: "percentage", label: "%" },
@@ -51,7 +50,6 @@ export const votingChoiceAdvanceConfig = [
 		description:
 			"The proportion of those who voted on a single choice proposal who must vote 'Yes' for it to pass.",
         icon: "🗳️",
-        disabled: true,
         options: [
             { value: "percentage", label: "%" },
         ],
@@ -62,7 +60,6 @@ export const votingChoiceAdvanceConfig = [
 		description:
 			"The minimum percentage of voting power that must vote on a proposal for it to be considered. For example, in the US House of Representatives, 218 members must be present for a vote. If you have a DAO with many inactive members, setting this value too high may make it difficult to pass proposals.",
         icon: "📣",
-        disabled: true,
         options: [
             { value: "percentage", label: "%" },
         ],
