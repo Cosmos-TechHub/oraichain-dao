@@ -44,7 +44,7 @@ const Header = () => {
             // headerTitle = daoConfig.name + " DAO";
             // headerTitle.toUpperCase();
             // setdaoInfo({ dao_addr: daoAddr, dao_name: daoConfig.name });
-            headerTitle = "ORAIX Governance"
+            headerTitle = "Token Governance"
             break;
           case "proposal":
             // const proposalInfo = router.query.id as string[];

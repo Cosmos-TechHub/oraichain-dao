@@ -26,6 +26,7 @@ import ContentStakingModal from "./ContentStakingModal";
 export interface IStakingModal {
 	token_addr: string;
 	staking_addr: string;
+  token_denom: string;
 	reloadBalance: boolean;
 	setReloadBalance: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -33,6 +34,7 @@ export interface IStakingModal {
 const StakingModal = ({
 	token_addr,
 	staking_addr,
+  token_denom,
 	reloadBalance,
 	setReloadBalance,
 }: IStakingModal) => {
@@ -102,7 +104,7 @@ const StakingModal = ({
 							onBlur={handleChange}
 							className="outline-none text-right text-base col-span-1"
 						/>
-						<p className="text-primary-grey text-base">$ORAIX</p>
+						<p className="text-primary-grey text-base">${token_denom}</p>
 					</div>
 				</div>
 				<h1 className="text-base text-primary-grey pb-6 border-b border-secondary-grey-bg">
@@ -110,9 +112,9 @@ const StakingModal = ({
 					{activeTab === "1"
 						? presentDecimal(balance)
 						: presentDecimal(stakedBalance)}{" "}
-					$ORAIX
+					${token_denom}
 				</h1>
-				{unstakePeriod && (
+				{/* {unstakePeriod && (
 					<div className="border-b border-secondary-grey-bg pb-6">
 						<h1 className="text-lg text-third-grey mb-6">
 							Unstaking period: 2 weeks
@@ -124,7 +126,7 @@ const StakingModal = ({
 							unbonding.
 						</p>
 					</div>
-				)}
+				)} */}
 			</div>
 		);
 	};

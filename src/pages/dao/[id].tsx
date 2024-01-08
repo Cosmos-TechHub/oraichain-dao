@@ -40,7 +40,7 @@ const DaoPage = () => {
 		totalProposal: number;
 		tokenAddr: string;
 		stakingAddr: string;
-    tokenDenom: string
+		tokenDenom: string;
 	} | null>(null);
 	const [userStaked, setUserStaked] = useState<{
 		stakedToken: string;
@@ -74,8 +74,8 @@ const DaoPage = () => {
 				const tokenAddr = await votingClient.tokenContract();
 				const stakingAddr = await votingClient.stakingContract();
 
-        const cw20Token = new Cw20BaseQueryClient(client, tokenAddr)
-        const tokenInfo = await cw20Token.tokenInfo();
+				const cw20Token = new Cw20BaseQueryClient(client, tokenAddr);
+				const tokenInfo = await cw20Token.tokenInfo();
 
 				setDaoContractInfo({
 					name: config.name,
@@ -86,7 +86,7 @@ const DaoPage = () => {
 					totalProposal: Number(totalProposal),
 					tokenAddr,
 					stakingAddr,
-          tokenDenom: tokenInfo.symbol
+					tokenDenom: tokenInfo.symbol,
 				});
 			}
 		};
@@ -204,7 +204,9 @@ const DaoPage = () => {
 													Staked token:
 												</p>
 												<p className="text-sm font-medium text-secondary-grey">
-													{presentDecimal(userStaked!.stakedToken) + " $" + daoContractInfo.tokenDenom}
+													{presentDecimal(userStaked!.stakedToken) +
+														" $" +
+														daoContractInfo.tokenDenom}
 												</p>
 											</div>
 											<div className="flex gap-3 items-center mt-1">
@@ -212,7 +214,9 @@ const DaoPage = () => {
 													Reward token:
 												</p>
 												<p className="text-sm font-medium text-secondary-grey">
-													{presentDecimal(userStaked!.rewardToken) + " $" + daoContractInfo.tokenDenom}
+													{presentDecimal(userStaked!.rewardToken) +
+														" $" +
+														daoContractInfo.tokenDenom}
 												</p>
 											</div>
 										</>
@@ -228,6 +232,7 @@ const DaoPage = () => {
 							<StakingModal
 								token_addr={daoContractInfo.tokenAddr}
 								staking_addr={daoContractInfo.stakingAddr}
+                token_denom={daoContractInfo.tokenDenom}
 								reloadBalance={reloadBalance}
 								setReloadBalance={setReloadBalance}
 							/>
