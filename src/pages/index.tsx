@@ -4,11 +4,11 @@ import { Inter } from "next/font/google";
 // import { network, daoInfo } from "@/config";
 import DaoCard from "@/components/DaoCard";
 import {
-  daoInfo,
-  network,
-  stakingRewardAddress,
-  stakingRewardOraiX,
-  voterAddress,
+	daoInfo,
+	network,
+	stakingRewardAddress,
+	stakingRewardOraiX,
+	voterAddress,
 } from "@/config";
 import { useChain } from "@cosmos-kit/react";
 import { Cw20BaseClient } from "@oraichain/common-contracts-sdk";
@@ -18,129 +18,56 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "@/config/redux";
 import { increment, decrement } from "@/reducers/counter";
 import { Cw20StakeRewardDistributorClient } from "@/codegen/Cw20StakeRewardDistributor.client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const dispatch = useAppDispatch();
-  const count = useAppSelector((state) => state.counter.value);
-  const dao = useAppSelector((state) => state.dao);
+	const dispatch = useAppDispatch();
+	const count = useAppSelector((state) => state.counter.value);
+	const dao = useAppSelector((state) => state.dao);
 
-  const { getSigningCosmWasmClient, address } = useChain(network.chainName);
+	const { getSigningCosmWasmClient, address } = useChain(network.chainName);
 
-  const handleStakeToken = async () => {
-    const client = await getSigningCosmWasmClient();
-    if (address) {
-      const cw20Client = new Cw20BaseClient(
-        client,
-        address,
-        daoInfo.token_addr
-      );
-      await cw20Client.send({
-        contract: daoInfo.staking_addr,
-        amount: "100",
-        msg: toBinary({
-          stake: {},
-        }),
-      });
+	if (
+		localStorage.getItem("imageCount") === null ||
+		localStorage.getItem("imageCount") === "undefined"
+	) {
+		localStorage.setItem("imageCount", "0");
+	}
 
-      const { balance } = await cw20Client.balance({
-        address: daoInfo.staking_addr,
-      });
-      console.log(balance);
-    }
-  };
+	const handleDistribute = async () => {
+		try {
+			if (address) {
+				const client = await getSigningCosmWasmClient();
+				const stakingRewardClient = new Cw20StakeRewardDistributorClient(
+					client,
+					address,
+					stakingRewardOraiX
+				);
 
-  const handleShowBalance = async () => {
-    const client = await getSigningCosmWasmClient();
-    if (address) {
-      const cw20Client = new Cw20BaseClient(
-        client,
-        address,
-        daoInfo.token_addr
-      );
-      const { balance } = await cw20Client.balance({
-        address: stakingRewardAddress,
-      });
-      console.log(balance);
-    }
-  };
+				await stakingRewardClient.distribute();
+				toast.success("Distribute reward success !", {
+					position: toast.POSITION.TOP_RIGHT,
+				});
+			}
+		} catch (err: any) {
+			console.log(err);
+			toast.error(err, {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+		}
+	};
 
-  const handleSendToAlice = async () => {
-    const client = await getSigningCosmWasmClient();
-    if (address) {
-      const cw20Client = new Cw20BaseClient(
-        client,
-        address,
-        daoInfo.token_addr
-      );
-      await cw20Client.transfer({
-        amount: "10000",
-        recipient: voterAddress.alice, //alice
-      });
-
-      const { balance } = await cw20Client.balance({
-        address: voterAddress.alice,
-      });
-      console.log(balance);
-    }
-  };
-
-  const handleSendToBob = async () => {
-    const client = await getSigningCosmWasmClient();
-    if (address) {
-      const cw20Client = new Cw20BaseClient(
-        client,
-        address,
-        daoInfo.token_addr
-      );
-      await cw20Client.transfer({
-        amount: "10000",
-        recipient: voterAddress.bob, //bob
-      });
-
-      const { balance } = await cw20Client.balance({
-        address: voterAddress.bob, // bob
-      });
-      console.log(balance);
-    }
-  };
-
-  const handleDistribute = async () => {
-    try {
-      if (address) {
-        const client = await getSigningCosmWasmClient();
-        const stakingRewardClient = new Cw20StakeRewardDistributorClient(
-          client,
-          address,
-          stakingRewardOraiX
-        );
-
-        await stakingRewardClient.distribute();
-        toast.success("Distribute reward success !", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-    } catch (err: any) {
-      console.log(err);
-      toast.error(err, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
-  };
-
-  const [text, setText] = useState("");
-
-  return (
-    <div id="home" className="flex flex-col">
-      <h1 className="text-lg font-semibold mb-8">Featured DAOs</h1>
-      <div className="w-full flex gap-4">
-        {dao.data.map((daoInfo) => (
-          <DaoCard daoInfo={daoInfo} key={daoInfo.dao_addr} />
-        ))}
-      </div>
-      {/* <div className="mt-6 flex gap-6">
+	return (
+		<div id="home" className="flex flex-col">
+			<h1 className="text-lg font-semibold mb-8">Featured DAOs</h1>
+			<div className="w-full flex gap-4">
+				{dao.data.map((daoInfo) => (
+					<DaoCard daoInfo={daoInfo} key={daoInfo.dao_addr} />
+				))}
+			</div>
+			{/* <div className="mt-6 flex gap-6">
         <button onClick={handleStakeToken}>stake token</button>
         <button onClick={handleSendToAlice}>send token to alice</button>
         <button onClick={handleSendToBob}>send token to bob</button>
@@ -153,7 +80,7 @@ export default function Home() {
         </button>
       </div> */}
 
-      {/* <div>
+			{/* <div>
         <input
           className="border border-black"
           type="text"
@@ -162,7 +89,7 @@ export default function Home() {
         />
       </div> */}
 
-      {/* <div className="mt-6 flex items-center justify-around">
+			{/* <div className="mt-6 flex items-center justify-around">
         <button
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
@@ -177,6 +104,6 @@ export default function Home() {
           Decrement
         </button>
       </div> */}
-    </div>
-  );
+		</div>
+	);
 }

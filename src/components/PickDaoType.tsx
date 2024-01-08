@@ -8,6 +8,7 @@ import {
 	getCreateDaoInfo,
 	setCreateDaoInfo,
 } from "@/utils/localStorageCreateDao";
+import { uploadMoralisImage } from "@/services/moralis";
 
 interface IPickDaoType {
 	setPagination: React.Dispatch<React.SetStateAction<number>>;
@@ -55,9 +56,9 @@ const PickDaoType = ({ setPagination }: IPickDaoType) => {
 		const newInfo = {
 			name: values.daoName,
 			description: values.description,
-			image_url: imageUrl
-		} as any
-		let newDaoInfo = daoInfo ? {...daoInfo, ...newInfo} : daoInfo;
+			image_url: imageUrl,
+		} as any;
+		let newDaoInfo = daoInfo ? { ...daoInfo, ...newInfo } : daoInfo;
 		setCreateDaoInfo(newDaoInfo);
 		setPagination((prevPagination) => prevPagination + 1);
 	};
@@ -71,9 +72,15 @@ const PickDaoType = ({ setPagination }: IPickDaoType) => {
 		}
 		if (info.file.status === "done") {
 			// Get this url from response in real world.
-			getBase64(info.file.originFileObj as RcFile, (url) => {
+			getBase64(info.file.originFileObj as RcFile, async (url) => {
+				const id = localStorage.getItem("imageCount");
+				let imageId = 0;
+				if(id !== null && id !== "undefined") {
+					imageId = parseInt(id);
+				}
+				const ipfsImageUrl = await uploadMoralisImage(url, imageId);
+				setImageUrl(ipfsImageUrl.toJSON()[0].path);
 				setLoading(false);
-				setImageUrl(url);
 			});
 		}
 	};
@@ -108,8 +115,9 @@ const PickDaoType = ({ setPagination }: IPickDaoType) => {
 					)}
 				</Upload>
 
-				<div className="text-primary-grey text-[17px] font-semibold">
-					Add an image
+				<div className="text-primary-grey text-[17px] font-semibold flex items-center gap-6">
+					<p>Add an image</p>
+					{loading && <LoadingOutlined />}
 				</div>
 			</div>
 
@@ -122,6 +130,7 @@ const PickDaoType = ({ setPagination }: IPickDaoType) => {
 				onFinish={onFinish}
 				autoComplete="off"
 				form={form}
+				className="mt-10"
 			>
 				<div className="bg-secondary-grey-bg px-6 py-8">
 					<Form.Item<FieldType>
@@ -143,7 +152,9 @@ const PickDaoType = ({ setPagination }: IPickDaoType) => {
 						labelCol={{ span: 24 }}
 						wrapperCol={{ span: 24 }}
 						rules={[{ required: true }]}
-						initialValue={daoInfo && daoInfo.description ? daoInfo.description : ""}
+						initialValue={
+							daoInfo && daoInfo.description ? daoInfo.description : ""
+						}
 					>
 						<Input.TextArea
 							placeholder="Give your DAO a description..."

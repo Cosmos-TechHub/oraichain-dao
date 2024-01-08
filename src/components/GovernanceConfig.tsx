@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
-import {
-	UserOutlined,
-	ArrowLeftOutlined,
-	LoadingOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { useChain } from "@cosmos-kit/react";
 import { toast } from "react-toastify";
 
@@ -27,7 +23,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 	const newToken = getNewToken();
 	const existToken = getExistToken();
 
-	const { address, getCosmWasmClient } = useChain(network.chainName);
+	const { address } = useChain(network.chainName);
 
 	const [keyTab, setKeyTab] = useState<number>(1);
 	const [initialToken, setInitialToken] = useState<{
@@ -40,7 +36,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 				symbol: newToken.symbol ? newToken.symbol : "",
 				name: newToken.name ? newToken.name : "",
 				token: newToken.initial_balances[0].amount
-					? newToken.initial_balances[0].amount
+					? (parseInt(newToken.initial_balances[0].amount) / 1000000).toString()
 					: "1000000",
 			};
 			return newInfo;
@@ -231,17 +227,29 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 						...newToken,
 						symbol: initialToken.symbol,
 						name: initialToken.name,
+						label: initialToken.name,
 						initial_balances: [
-							{ address: address, amount: initialToken.token },
+							{
+								address: address,
+								amount: (parseInt(initialToken.token) * 1000000).toString(),
+							},
 						],
 					} as any;
 					console.log(newInfo);
 
 					setNewToken(newInfo);
+
+					if (existToken) {
+						const newExistToken = {
+							staking_contract: existToken.staking_contract,
+						} as any;
+						setExistToken(newExistToken);
+					}
+					setPagination((prevPagination) => prevPagination + 1);
 				}
 				break;
 			case 2:
-				if (existAddress === "") {
+				if (existAddress.trim() === "" || existAddress === undefined) {
 					toast.error("Missing address of token!", {
 						position: toast.POSITION.TOP_RIGHT,
 					});
@@ -253,12 +261,11 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 					address: existAddress,
 				} as any;
 				setExistToken(newInfo);
+				setPagination((prevPagination) => prevPagination + 1);
 				break;
 			default:
 				break;
 		}
-
-		setPagination((prevPagination) => prevPagination + 1);
 	};
 
 	return (

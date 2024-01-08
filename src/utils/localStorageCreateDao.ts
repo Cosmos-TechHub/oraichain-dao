@@ -1,6 +1,6 @@
 import { InstantiateMsg as DaoInitMsg } from "@/codegen/DaoDaoCore.types";
 import { InstantiateMsg as VotingInitMsg } from "@/codegen/DaoVotingCw20Staked.types";
-import {InstantiateMsg as ProposalInitMsg} from '@/codegen/DaoProposalSingle.types'
+import { InstantiateMsg as ProposalInitMsg } from "@/codegen/DaoProposalSingle.types";
 import {
 	StakingInfo,
 	Cw20Coin,
@@ -9,11 +9,11 @@ import {
 	Duration,
 } from "@/codegen/types";
 
-type ExistToken = {
+export type ExistToken = {
 	address: string;
 	staking_contract: StakingInfo;
 };
-type NewToken = {
+export type NewToken = {
 	code_id: number;
 	decimals: number;
 	initial_balances: Cw20Coin[];
@@ -25,31 +25,31 @@ type NewToken = {
 	symbol: string;
 	unstaking_duration?: Duration | null;
 };
-type VotingConfig = {
+export type VotingConfig = {
 	unstake_period: {
-		type: string,
-		value: number
-	},
+		type: string;
+		value: number;
+	};
 	voting_duration: {
-		type: string,
-		value: number
-	},
+		type: string;
+		value: number;
+	};
 	active_threadhole: {
-		disabled: boolean,
-		type: string,
-		value: number
-	},
+		disabled: boolean;
+		type: string;
+		value: number;
+	};
 	passing_threadhole: {
-		majority: boolean,
-		type: string,
-		value: number
-	},
+		majority: boolean;
+		type: string;
+		value: number;
+	};
 	quorum: {
-		majority: boolean,
-		type: string,
-		value: number
-	}
-}
+		majority: boolean;
+		type: string;
+		value: number;
+	};
+};
 
 type getCreateDaoInfo = () => DaoInitMsg | null;
 type getVotingCreateInfo = () => VotingInitMsg | null;
@@ -57,15 +57,24 @@ type getProposalCreateInfo = () => ProposalInitMsg | null;
 type getExistToken = () => ExistToken | null;
 type getNewToken = () => NewToken | null;
 type getVotingConfig = () => VotingConfig | null;
+type getDao = () => Array<{
+	dao_addr: string;
+	voting_addr: string;
+	proposal_addr: string;
+	token_addr: string;
+	staking_addr: string;
+}> | null;
 
 export const getCreateDaoInfo: getCreateDaoInfo = () => {
-	const daoInfo = localStorage.getItem("createDaoInfo");
-
-	if (daoInfo === "undefined" || daoInfo === null) {
-		return null;
-	} else {
-		return JSON.parse(daoInfo);
+	if (typeof window !== "undefined") {
+		const daoInfo = localStorage.getItem("createDaoInfo");
+		if (daoInfo === "undefined" || daoInfo === null) {
+			return null;
+		} else {
+			return JSON.parse(daoInfo);
+		}
 	}
+	return null;
 };
 
 export const setCreateDaoInfo = (daoInfo: DaoInitMsg) => {
@@ -73,13 +82,15 @@ export const setCreateDaoInfo = (daoInfo: DaoInitMsg) => {
 };
 
 export const getVotingCreateInfo: getVotingCreateInfo = () => {
-	const votingInfo = localStorage.getItem("createVotingInfo");
-
-	if (votingInfo === "undefined" || votingInfo === null) {
-		return null;
-	} else {
-		return JSON.parse(votingInfo);
+	if (typeof window !== "undefined") {
+		const votingInfo = localStorage.getItem("createVotingInfo");
+		if (votingInfo === "undefined" || votingInfo === null) {
+			return null;
+		} else {
+			return JSON.parse(votingInfo);
+		}
 	}
+	return null;
 };
 
 export const setCreateVotingInfo = (votingInfo: VotingInitMsg) => {
@@ -87,13 +98,15 @@ export const setCreateVotingInfo = (votingInfo: VotingInitMsg) => {
 };
 
 export const getExistToken: getExistToken = () => {
-	const existToken = localStorage.getItem("existToken");
-
-	if (existToken === "undefined" || existToken === null) {
-		return null;
-	} else {
-		return JSON.parse(existToken);
+	if (typeof window !== "undefined") {
+		const existToken = localStorage.getItem("existToken");
+		if (existToken === "undefined" || existToken === null) {
+			return null;
+		} else {
+			return JSON.parse(existToken);
+		}
 	}
+	return null;
 };
 
 export const setExistToken = (existToken: ExistToken) => {
@@ -101,13 +114,15 @@ export const setExistToken = (existToken: ExistToken) => {
 };
 
 export const getNewToken: getNewToken = () => {
-	const newToken = localStorage.getItem("newToken");
-
-	if (newToken === "undefined" || newToken === null) {
-		return null;
-	} else {
-		return JSON.parse(newToken);
+	if (typeof window !== "undefined") {
+		const newToken = localStorage.getItem("newToken");
+		if (newToken === "undefined" || newToken === null) {
+			return null;
+		} else {
+			return JSON.parse(newToken);
+		}
 	}
+	return null;
 };
 
 export const setNewToken = (newToken: NewToken) => {
@@ -115,13 +130,15 @@ export const setNewToken = (newToken: NewToken) => {
 };
 
 export const getProposalCreateInfo: getProposalCreateInfo = () => {
-	const proposalInfo = localStorage.getItem("createProposalInfo");
-
-	if (proposalInfo === "undefined" || proposalInfo === null) {
-		return null;
-	} else {
-		return JSON.parse(proposalInfo);
+	if (typeof window !== "undefined") {
+		const proposalInfo = localStorage.getItem("createProposalInfo");
+		if (proposalInfo === "undefined" || proposalInfo === null) {
+			return null;
+		} else {
+			return JSON.parse(proposalInfo);
+		}
 	}
+	return null;
 };
 
 export const setProposalCreateInfo = (proposalInfo: ProposalInitMsg) => {
@@ -129,14 +146,46 @@ export const setProposalCreateInfo = (proposalInfo: ProposalInitMsg) => {
 };
 
 export const getVotingConfig: getVotingConfig = () => {
-	const votingConfig = localStorage.getItem("votingConfig");
-	if(votingConfig === "undefined" || votingConfig === null) {
-		return null;
-	} else {
-		return JSON.parse(votingConfig)
+	if (typeof window !== "undefined") {
+		const votingConfig = localStorage.getItem("votingConfig");
+		if (votingConfig === "undefined" || votingConfig === null) {
+			return null;
+		} else {
+			return JSON.parse(votingConfig);
+		}
 	}
-}
+	return null;
+};
 
 export const setVotingConfig = (votingConfig: VotingConfig) => {
 	localStorage.setItem("votingConfig", JSON.stringify(votingConfig));
+};
+
+export const getDao: getDao = () => {
+	if (typeof window !== "undefined") {
+		const daoInfo = localStorage.getItem("daoInfo");
+		if (daoInfo === "undefined" || daoInfo === null) {
+			return null;
+		} else {
+			return JSON.parse(daoInfo);
+		}
+	}
+	return null;
 }
+
+export const setDao = (daoInfo: {
+	dao_addr: string;
+	voting_addr: string;
+	proposal_addr: string;
+	token_addr: string;
+	staking_addr: string;
+}) => {
+	const dao = getDao();
+	let newDao = []
+	if(dao) {
+		newDao = [...dao, daoInfo]
+	} else {
+		newDao = [daoInfo]
+	}
+	localStorage.setItem("daoInfo", JSON.stringify(newDao));
+};

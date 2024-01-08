@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useChain } from "@cosmos-kit/react";
 import Image from "next/image";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -19,10 +19,11 @@ import {
 	getProposalCreateInfo,
 	setProposalCreateInfo,
 	getVotingConfig,
-  setVotingConfig,
+	setVotingConfig,
 } from "@/utils/localStorageCreateDao";
 import { network, codeId } from "@/config";
 import ConnectWallet from "@/assets/image/connect-wallet.png";
+import { startMoralisServer } from "@/services/moralis";
 
 const CreateDao = () => {
 	const { status, address } = useChain(network.chainName);
@@ -76,7 +77,7 @@ const CreateDao = () => {
 		const newInfo = {
 			code_id: codeId.cw20_base,
 			decimals: 6,
-			initial_balances: [{ address: address, amount: "1000000" }],
+			initial_balances: [{ address: address, amount: "1000000000000" }],
 			staking_code_id: codeId.staking,
 		} as any;
 		setNewToken(newInfo);
@@ -117,7 +118,7 @@ const CreateDao = () => {
 				value: 1,
 			},
 		};
-    setVotingConfig(newInfo)
+		setVotingConfig(newInfo);
 	}
 
 	const CreateDaoPage = ({ pagination }: { pagination: number }) => {
@@ -135,10 +136,16 @@ const CreateDao = () => {
 		}
 	};
 
+	useEffect(() => {
+		(async () => {
+			startMoralisServer();
+		})();
+	}, []);
+
 	return (
 		<div id="create-dao" className="flex justify-center items-center">
 			{status === "Connected" ? (
-				<CreateDaoPage pagination={3} />
+				<CreateDaoPage pagination={pagination} />
 			) : status === "Connecting" ? (
 				<div className="flex flex-col gap-10 justify-center items-center mt-28">
 					<LoadingOutlined className="text-[26px] text-third-grey" />

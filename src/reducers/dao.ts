@@ -48,17 +48,20 @@ export const daoSlice = createSlice({
 		],
 	} as DaoInterface,
 	reducers: {
-		// increment: (state: DaoInterface) => {
-		//   state.value += 1;
-		// },
-		// decrement: (state) => {
-		//   state.value -= 1;
-		// },
-		// incrementByAmount: (state, action: PayloadAction<number>) => {
-		//   state.value += action.payload;
-		// },
+		addNewDao: (
+			state,
+			action: PayloadAction<{
+				dao_addr: string;
+				voting_addr: string;
+				proposal_addr: string;
+				token_addr: string;
+				staking_addr: string;
+			}>
+		) => {
+			state.data = [...state.data, action.payload];
+		},
 	},
 });
 
-// export const { increment, decrement, incrementByAmount } = daoSlice.actions;
+export const { addNewDao } = daoSlice.actions;
 export default daoSlice.reducer;
