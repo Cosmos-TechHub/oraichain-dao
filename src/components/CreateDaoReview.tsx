@@ -110,8 +110,6 @@ const CreateDaoReview = ({ setPagination }: ICreateDaoReview) => {
 				const daoAddress = await client.instantiate(
 					address,
 					codeId.dao,
-					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-					// @ts-ignore
 					daoInitMessage,
 					"Oraichain Dao",
 					"auto"
