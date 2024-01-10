@@ -30,6 +30,8 @@ export const votingConfigReview: VotingConfigReview = (
 			description: votingConfig
 				? votingConfig.active_threadhole.disabled
 					? "Disabled"
+					: votingConfig.active_threadhole.type === "percentage"
+					? `${votingConfig.active_threadhole.value} %`
 					: `${votingConfig.active_threadhole.value} tokens`
 				: "",
 		},

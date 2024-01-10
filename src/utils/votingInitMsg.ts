@@ -65,19 +65,19 @@ export const votingInitMsg: VotingInitMsg = (
 			},
 		};
 	} else {
-    tokenInfo = {
-      new: {
-        ...newToken,
-        unstaking_duration: { time: unstakePeriod(votingConfig) },
-      }
-    }
-  }
+		tokenInfo = {
+			new: {
+				...newToken,
+				unstaking_duration: { time: unstakePeriod(votingConfig) },
+			},
+		};
+	}
 
 	const initMsg = {
-	    ...votingInfo,
-	    active_threshold: activeThreadhole,
-      token_info: tokenInfo
-	}
+		...votingInfo,
+		active_threshold: activeThreadhole,
+		token_info: tokenInfo,
+	};
 
 	return initMsg;
 };
