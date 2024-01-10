@@ -225,13 +225,13 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 				if (newToken && address) {
 					const newInfo = {
 						...newToken,
-						symbol: initialToken.symbol,
-						name: initialToken.name,
-						label: initialToken.name,
+						symbol: initialToken.symbol.trim(),
+						name: initialToken.name.trim(),
+						label: initialToken.name.trim(),
 						initial_balances: [
 							{
 								address: address,
-								amount: (parseInt(initialToken.token) * 1000000).toString(),
+								amount: (parseInt(initialToken.token.trim()) * 1000000).toString(),
 							},
 						],
 					} as any;
@@ -258,7 +258,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 
 				const newInfo = {
 					...existToken,
-					address: existAddress,
+					address: existAddress.trim(),
 				} as any;
 				setExistToken(newInfo);
 				setPagination((prevPagination) => prevPagination + 1);

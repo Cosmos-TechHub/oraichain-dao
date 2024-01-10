@@ -54,8 +54,8 @@ const PickDaoType = ({ setPagination }: IPickDaoType) => {
 		console.log("Success:", values);
 		console.log("image: ", imageUrl);
 		const newInfo = {
-			name: values.daoName,
-			description: values.description,
+			name: values.daoName.trim(),
+			description: values.description.trim(),
 			image_url: imageUrl,
 		} as any;
 		let newDaoInfo = daoInfo ? { ...daoInfo, ...newInfo } : daoInfo;

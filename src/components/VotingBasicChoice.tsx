@@ -119,7 +119,13 @@ const VotingBasicChoice = ({
 					<input
 						type="text"
 						value={configValue.toString()}
-						onChange={(e) => setConfigValue(parseInt(e.target.value))}
+						onChange={(e) => {
+							if(e.target.value.trim() === "") {
+								setConfigValue(1)
+							} else {
+								setConfigValue(parseInt(e.target.value))
+							}
+						}}
 						className="w-[40%] py-1 text-right text-base outline-none bg-transparent"
 					/>
 				</div>
