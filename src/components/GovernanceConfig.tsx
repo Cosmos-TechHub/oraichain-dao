@@ -72,7 +72,10 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 									defaultValue={initialToken.symbol}
 									onBlur={(e) => {
 										setInitialToken((old) => {
-											return { ...old, symbol: e.target.value };
+											return {
+												...old,
+												symbol: e.target.value.trim().toUpperCase(),
+											};
 										});
 									}}
 									placeholder="An aplphanumeric symbol (e.g. DDT)"
@@ -90,7 +93,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 									defaultValue={initialToken.name}
 									onBlur={(e) => {
 										setInitialToken((old) => {
-											return { ...old, name: e.target.value };
+											return { ...old, name: e.target.value.trim() };
 										});
 									}}
 									placeholder='Longer name of your token (e.g. "Dog Dao token")'
@@ -102,19 +105,21 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 
 					<div className="flex items-center justify-between pb-[18px] border-b border-secondary-grey-bg">
 						<h1 className="text-base font-medium">Total token supply</h1>
-						<div className="flex items-center gap-2">
+						<div className="flex items-center gap-4">
 							<input
 								type="text"
 								name="token"
 								defaultValue={initialToken.token}
 								onBlur={(e) => {
 									setInitialToken((old) => {
-										return { ...old, token: e.target.value };
+										return { ...old, token: e.target.value.trim() };
 									});
 								}}
-								className="outline-none pl-4 py-[6px] text-right text-third-grey font-medium text-base bg-transparent"
+								className="outline-none max-w-[120px] pl-4 pr-2 py-[6px] text-right text-third-grey font-medium text-base bg-transparent border border-primary-grey-bg rounded-lg"
 							/>
-							<p className="text-third-grey font-medium text-base">$TOKEN</p>
+							<p className="text-third-grey font-medium text-base">
+								${initialToken.symbol ? initialToken.symbol : "TOKEN"}
+							</p>
 						</div>
 					</div>
 
@@ -176,7 +181,7 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 		return (
 			<div className="px-6 pt-4 pb-8 bg-secondary-grey-bg rounded-lg flex flex-col gap-6">
 				<h1 className="text-base font-medium text-secondary-grey">
-					Token identifier
+					Token address
 				</h1>
 				<input
 					type="text"
@@ -231,7 +236,9 @@ const GovernanceConfig = ({ setPagination }: IGovernanceConfig) => {
 						initial_balances: [
 							{
 								address: address,
-								amount: (parseInt(initialToken.token.trim()) * 1000000).toString(),
+								amount: (
+									parseInt(initialToken.token.trim()) * 1000000
+								).toString(),
 							},
 						],
 					} as any;

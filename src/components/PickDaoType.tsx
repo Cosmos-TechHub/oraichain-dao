@@ -3,6 +3,7 @@ import { Button, Form, Input, message, Upload } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import type { UploadChangeParam } from "antd/es/upload";
 import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import { toast } from "react-toastify";
 
 import {
 	getCreateDaoInfo,
@@ -75,11 +76,18 @@ const PickDaoType = ({ setPagination }: IPickDaoType) => {
 			getBase64(info.file.originFileObj as RcFile, async (url) => {
 				const id = localStorage.getItem("imageCount");
 				let imageId = 0;
-				if(id !== null && id !== "undefined") {
+				if (id !== null && id !== "undefined") {
 					imageId = parseInt(id);
 				}
-				const ipfsImageUrl = await uploadMoralisImage(url, imageId);
-				setImageUrl(ipfsImageUrl.toJSON()[0].path);
+				try {
+					const ipfsImageUrl = await uploadMoralisImage(url, imageId);
+					setImageUrl(ipfsImageUrl.toJSON()[0].path);
+				} catch (err: any) {
+					console.log(err);
+					toast.error(err, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
+				}
 				setLoading(false);
 			});
 		}

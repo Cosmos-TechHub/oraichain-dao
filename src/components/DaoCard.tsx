@@ -5,12 +5,12 @@ import { BankOutlined, FileTextOutlined } from "@ant-design/icons";
 import { useChain } from "@cosmos-kit/react";
 import { LoadingOutlined } from "@ant-design/icons";
 
-import DaoImage from "@/assets/image/dao.png";
-import OraiImage from "@/assets/image/new-orai.png";
 import OraiDex from "@/assets/image/oraidex.webp";
+import DefaultDaoImage from "@/assets/image/default-dao-img.jpg";
 import { network } from "@/config";
 import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
 import { DaoProposalSingleQueryClient } from "@/codegen/DaoProposalSingle.client";
+import { toast } from "react-toastify";
 
 interface IDaoCard {
 	daoInfo: {
@@ -55,6 +55,9 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
 					});
 				} catch (err: any) {
 					console.log(err);
+					toast.error(err, {
+						position: toast.POSITION.TOP_RIGHT,
+					});
 				}
 			}
 		};
@@ -77,21 +80,21 @@ const DaoCard = ({ daoInfo }: IDaoCard) => {
 			) : (
 				<>
 					<div className="flex flex-col items-center">
-						{daoContractInfo.image_url ? (
-							<div className="w-[98px] h-[98px] mb-3 rounded-[999px] overflow-hidden">
+						<div className="w-[98px] h-[98px] mb-3 rounded-[999px] overflow-hidden">
+							{daoContractInfo.image_url ? (
 								<img
 									src={daoContractInfo.image_url}
 									alt="dao image"
 									className="w-full h-full mb-3"
 								/>
-							</div>
-						) : (
-							<Image
-								src={OraiDex}
-								alt="dao image"
-								className="w-[98px] h-[98px] mb-3"
-							/>
-						)}
+							) : (
+								<Image
+									src={DefaultDaoImage}
+									alt="dao image"
+									className="w-full h-full mb-3"
+								/>
+							)}
+						</div>
 
 						<h1 className="text-base text-black font-medium">
 							{daoContractInfo.name}

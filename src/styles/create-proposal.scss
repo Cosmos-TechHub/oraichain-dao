@@ -38,7 +38,11 @@
         }
 
         .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
-            @apply border-secondary-grey-bg text-secondary-grey;
+            @apply border-secondary-grey-bg text-current;
+        }
+
+        #primary.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+            @apply text-white;
         }
     }
 }

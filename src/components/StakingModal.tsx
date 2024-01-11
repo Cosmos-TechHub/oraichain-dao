@@ -96,13 +96,13 @@ const StakingModal = ({
 							<MinusOutlined />
 						</button>
 					</div>
-					<div className="grid grid-cols-2 gap-2 items-center text-lg px-2">
+					<div className="grid grid-cols-2 gap-4 items-center text-lg px-2">
 						<input
 							type="text"
 							name="token"
 							defaultValue={token}
 							onBlur={handleChange}
-							className="outline-none text-right text-base col-span-1"
+							className="outline-none text-right text-base col-span-1 px-2 py-[6px] rounded-lg border border-primary-grey-bg"
 						/>
 						<p className="text-primary-grey text-base">${token_denom}</p>
 					</div>

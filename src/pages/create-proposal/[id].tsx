@@ -133,9 +133,11 @@ const CreateProposal = () => {
             Reset
           </Button>
           <Button
+          id="primary"
             htmlType="submit"
             disabled={status !== "Connected" ? true : false}
             loading={loadingMakeProposal}
+            className="bg-secondary-grey text-white"
           >
             Submit
           </Button>
