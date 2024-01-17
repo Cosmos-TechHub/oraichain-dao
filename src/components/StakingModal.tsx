@@ -26,7 +26,7 @@ import ContentStakingModal from "./ContentStakingModal";
 export interface IStakingModal {
 	token_addr: string;
 	staking_addr: string;
-  token_denom: string;
+	token_denom: string;
 	reloadBalance: boolean;
 	setReloadBalance: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -34,7 +34,7 @@ export interface IStakingModal {
 const StakingModal = ({
 	token_addr,
 	staking_addr,
-  token_denom,
+	token_denom,
 	reloadBalance,
 	setReloadBalance,
 }: IStakingModal) => {
@@ -45,8 +45,8 @@ const StakingModal = ({
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState<string>("1");
 	const [token, setToken] = useState<string>("0");
-	const [balance, setBalance] = useState<string>("");
-	const [stakedBalance, setStakedBalance] = useState<string>("");
+	const [balance, setBalance] = useState<string>("0");
+	const [stakedBalance, setStakedBalance] = useState<string>("0");
 	const [unstakePeriod, setUnstakedPeriod] = useState<Duration | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 
@@ -57,9 +57,6 @@ const StakingModal = ({
 			setToken(event.target.value);
 		}
 	};
-
-	console.log(parseFloat(token) * 1000000 < 0.000001);
-	console.log(1.001 - 1.0);
 
 	const Content = () => {
 		return (
@@ -144,7 +141,7 @@ const StakingModal = ({
 				// 	setToken={setToken}
 				// 	handleChange={handleChange}
 				// />
-        <Content />
+				<Content />
 			),
 		},
 		{
@@ -160,7 +157,7 @@ const StakingModal = ({
 				// 	setToken={setToken}
 				// 	handleChange={handleChange}
 				// />
-        <Content />
+				<Content />
 			),
 		},
 	];

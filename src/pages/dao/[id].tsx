@@ -11,9 +11,7 @@ import {
 import { Button } from "antd";
 import { useChain } from "@cosmos-kit/react";
 
-import DaoImage from "@/assets/image/dao.png";
-import OraiImage from "@/assets/image/new-orai.png";
-import OraiDex from "@/assets/image/oraidex.webp";
+import DefaultDaoImage from "@/assets/image/default-dao-img.jpg";
 import { network } from "@/config";
 import { DaoDaoCoreQueryClient } from "@/codegen/DaoDaoCore.client";
 import { ArrayOfProposalModule } from "@/codegen/DaoDaoCore.types";
@@ -155,22 +153,17 @@ const DaoPage = () => {
 				) : (
 					<>
 						<div className="h-full flex flex-col justify-center items-center px-10 pb-8 border-b border-primary-grey-bg">
-							{daoContractInfo.imageUrl ? (
-								<div className="w-[112px] h-[112px] rounded-[999px] overflow-hidden">
-									{" "}
+							<div className="w-[112px] h-[112px] rounded-[999px] overflow-hidden mt-6">
+								{daoContractInfo.imageUrl ? (
 									<img src={daoContractInfo.imageUrl} alt="dao image" />
-								</div>
-							) : (
-								<Image
-									src={
-										daoContractInfo.imageUrl
-											? daoContractInfo.imageUrl
-											: OraiDex
-									}
-									alt="dao img"
-									className="w-[112px] h-[112px]"
-								/>
-							)}
+								) : (
+									<Image
+										src={DefaultDaoImage}
+										alt="dao img"
+										className="w-[112px] h-[112px]"
+									/>
+								)}
+							</div>
 
 							<h1 className="mt-4 text-[25px] font-semibold">
 								{daoContractInfo.name}
@@ -232,7 +225,7 @@ const DaoPage = () => {
 							<StakingModal
 								token_addr={daoContractInfo.tokenAddr}
 								staking_addr={daoContractInfo.stakingAddr}
-                token_denom={daoContractInfo.tokenDenom}
+								token_denom={daoContractInfo.tokenDenom}
 								reloadBalance={reloadBalance}
 								setReloadBalance={setReloadBalance}
 							/>
